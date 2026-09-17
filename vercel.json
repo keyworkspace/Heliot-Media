@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/deleteUser.js": {
-      "maxDuration": 10
-    }
-  }
-}
