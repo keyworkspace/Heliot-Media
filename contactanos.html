@@ -1,152 +1,184 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contacto · Heliot Media</title>
-  <link href='https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;500;600;700;800&amp;display=swap' rel='stylesheet'/>
-  <link href='https://use.typekit.net/yyi3lii.css' rel='stylesheet'/>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contacto · Heliot Media</title>
+<meta name="description" content="Contáctanos. Estudio fotográfico en Yamabal, Morazán. Respondemos en 24-48 horas hábiles.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://use.typekit.net/yyi3lii.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="custom-cursor" id="customCursor"></div>
-  <div class="header" id="mainHeader">
-    <div class="header-inner">
-      <div class="logo"><h1><a href="index.html">Heliot Media</a></h1></div>
-      <ul class="nav-main" id="navMain">
-        <li class="dropdown"><button class="dropbtn">Nosotros</button><ul class="submenu"><li><a href="sobre-nosotros.html">Quienes somos</a></li><li><a href="politica-editorial.html">Política editorial</a></li><li><a href="https://heliotacademy.milaulas.com/">Campus virtual</a></li></ul></li>
-        <li class="dropdown"><button class="dropbtn">Vinculación Social</button><ul class="submenu"><li><a href="beneficios.html">Beneficios y Alianzas</a></li><li><a href="cide-heliot.html">Centro de Innovación</a></li></ul></li>
-        <li class="dropdown"><button class="dropbtn">Radar</button><ul class="submenu"><li><a href="index.html#radar">Radar de novedades</a></li><li><a href="index.html#univo">Acontecer UNIVO</a></li><li><a href="index.html#ugb">Actualidad UGB</a></li><li><a href="index.html#inya">Novedades INYA</a></li></ul></li>
-        <li><a href="el-tiempo.html">El tiempo</a></li>
-        <li class="dropdown"><button class="dropbtn">Heliot Media</button><ul class="submenu"><li><a href="sobre-nosotros.html">Sobre Nosotros</a></li><li><a href="aranceles.html">Aranceles</a></li><li><a href="promociones.html">Promociones</a></li><li><a href="reservas.html">Reservar</a></li><li><a href="pago-online.html">Pago Online</a></li></ul></li>
-      </ul>
-      <button aria-label="Buscar" class="search-toggle" id="searchToggle"><svg fill="none" height="20" stroke="#00406e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="20"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg></button>
-      <button aria-label="Menu" class="menu-mobile-toggle" id="mobileToggle">&#9776;</button>
+
+<header class="header" id="mainHeader">
+  <div class="header-inner">
+    <div class="logo"><a href="index.html">heliot<span class="logo-dot">.</span></a></div>
+    <ul class="nav-main" id="navMain">
+      <li><a href="index.html">Inicio</a></li>
+      <li class="dropdown">
+        <button class="dropbtn">Nosotros</button>
+        <ul class="submenu">
+          <li><a href="sobre-nosotros.html">Quiénes somos</a></li>
+          <li><a href="sobre-nosotros.html#equipo">Equipo</a></li>
+          <li><a href="politica-editorial.html">Política editorial</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <button class="dropbtn">Servicios</button>
+        <ul class="submenu">
+          <li><a href="aranceles.html">Aranceles</a></li>
+          <li><a href="promociones.html">Promociones</a></li>
+          <li><a href="contratar.html">Reservar sesión</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <button class="dropbtn">Alianzas</button>
+        <ul class="submenu">
+          <li><a href="beneficios.html">Beneficios</a></li>
+          <li><a href="cide-heliot.html">CIDE</a></li>
+        </ul>
+      </li>
+      <li><a href="contactanos.html">Contacto</a></li>
+    </ul>
+    <button class="search-toggle" id="searchToggle" aria-label="Buscar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="menu-mobile-toggle" id="mobileToggle" aria-label="Menú" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Contacto</span>
+    <h1 class="display">Hablemos</h1>
+    <p>¿Tienes una idea, un proyecto o una consulta? Completa el formulario y te respondemos en 24-48 horas hábiles.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width: 720px;">
+    <form id="contact-form" class="form-wrap" style="background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px 32px;">
+      <div class="form-group">
+        <label class="form-label" for="name">Nombre y apellido <span class="req">*</span></label>
+        <input class="form-input" type="text" id="name" name="Nombre" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Correo electrónico <span class="req">*</span></label>
+        <input class="form-input" type="email" id="email" name="Correo" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="subject">Asunto <span class="req">*</span></label>
+        <input class="form-input" type="text" id="subject" name="Asunto" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="message">Mensaje <span class="req">*</span></label>
+        <textarea class="form-input form-textarea" id="message" name="Mensaje" rows="6" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-gold" id="submit-btn" style="width: 100%;">Enviar mensaje</button>
+      <p class="form-hint text-center mt-16">Tu información será tratada según nuestra <a href="politica-de-privacidad.html" style="color: var(--black); font-weight: 600; border-bottom: 1px solid var(--gold);">Política de Privacidad</a>.</p>
+    </form>
+
+    <div class="mt-32 text-center">
+      <p style="font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Otras vías</p>
+      <p><a href="https://www.instagram.com/heliotmedia" target="_blank" rel="noopener" style="color: var(--black); font-weight: 600; border-bottom: 1.5px solid var(--gold);">Instagram @heliotmedia</a></p>
+      <p style="font-size: .85rem; color: var(--text-muted); margin-top: 8px;">Yamabal, Morazán, El Salvador</p>
     </div>
   </div>
+</section>
 
-  <div class="container" style="margin-top:30px; max-width:800px;">
-    <div class="post-page">
-      <div class="post-body">
-        <p style="text-align:center;"><strong>¿Tienes alguna pregunta, sugerencia o comentario?</strong></p>
-        <p style="text-align:center;">Completa el formulario y nos pondremos en contacto contigo lo antes posible.</p>
-        <div style="background:#f8fafc; border-radius:20px; padding:40px 30px; margin:30px auto; max-width:700px;">
-          <h3 style="color:#00406e; font-family:'Playfair Display',serif; text-align:center;">Solicitud de Información</h3>
-          <form id="contact-form" style="display:flex; flex-direction:column; gap:20px;">
-            <div><label style="font-weight:600;">Nombre y Apellido (Obligatorio)</label><input type="text" id="name" name="Nombre" required style="width:100%; padding:12px 16px; border:1px solid #dce0e8; border-radius:20px; font-size:16px;"/></div>
-            <div><label style="font-weight:600;">Correo Electrónico (Obligatorio)</label><input type="email" id="email" name="Correo" required style="width:100%; padding:12px 16px; border:1px solid #dce0e8; border-radius:20px; font-size:16px;"/></div>
-            <div><label style="font-weight:600;">Asunto</label><input type="text" id="subject" name="Asunto" required style="width:100%; padding:12px 16px; border:1px solid #dce0e8; border-radius:20px; font-size:16px;"/></div>
-            <div><label style="font-weight:600;">Mensaje</label><textarea id="message" name="Mensaje" rows="6" required style="width:100%; padding:12px 16px; border:1px solid #dce0e8; border-radius:20px; font-size:16px; resize:vertical;"></textarea></div>
-            <button type="submit" id="submit-btn" style="background:#00406e; color:white; border:none; border-radius:50px; padding:14px 32px; font-weight:700; font-size:16px; cursor:pointer; transition:0.3s;">Enviar</button>
-          </form>
-          <p style="font-size:13px; margin-top:20px; text-align:center; color:#777;">Tu información será tratada de acuerdo con nuestra <a href="politica-de-privacidad.html" style="color:#00406e;font-weight:600;">Política de Privacidad</a>.</p>
-        </div>
-        <div style="text-align:center; margin-top:20px;">
-          <h3 style="color:#00406e;">Otros medios de contacto</h3>
-          <p><strong>Redes sociales:</strong> <a href="https://www.instagram.com/heliotmedia" target="_blank" style="color:#00406e;font-weight:600;">Instagram</a></p>
-          <p style="color:#999;font-size:13px;">Intentamos responder en un plazo de 24 a 48 horas hábiles.</p>
-        </div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>heliot<span class="logo-dot">.</span></h3>
+        <p class="tagline">Estudio fotográfico profesional en Yamabal, Morazán. Producción visual y comunicación digital con identidad.</p>
+        <span class="footer-slogan">Be eternal · Sé eterno</span>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="sobre-nosotros.html">Nosotros</a></li>
+          <li><a href="contactanos.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="aranceles.html">Aranceles</a></li>
+          <li><a href="promociones.html">Promociones</a></li>
+          <li><a href="contratar.html">Reservar</a></li>
+          <li><a href="beneficios.html">Beneficios</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Transparencia</h4>
+        <ul>
+          <li><a href="politica-editorial.html">Política Editorial</a></li>
+          <li><a href="politica-de-privacidad.html">Privacidad</a></li>
+          <li><a href="politica-de-cookies.html">Cookies</a></li>
+          <li><a href="terminos-y-condiciones-de-uso.html">Términos</a></li>
+          <li><a href="aviso-legal.html">Aviso Legal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Heliot Media · Yamabal, Morazán, El Salvador</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/heliotmedia" target="_blank" rel="noopener">Instagram</a>
       </div>
     </div>
   </div>
+</footer>
 
-  <div class="footer">
-    <div class="footer-inner">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div style="margin-bottom:12px;"><img alt="Heliot Media" height="60" src="https://blogger.googleusercontent.com/img/a/AVvXsEgjN90ubujO6aF76PMuNTY7el1YR7BDF-CsXglaMEAB_FSzryOks4Zflmnn0fZlXBulUQtp64A5ZJt8IalatFXCNNV2K-qI09uqllYLvcsA_maBOKJ8pggVjMz4OMdG8HZTr2Lyj0dJlThvA37O3PN1IF9BYtaQigzIOVnh9Jovq5FY26YVU_uwK0p0nMuw" style="width:200px;height:auto;"/></div>
-          <h3>Heliot Media</h3>
-          <p class="tagline">Proyecto editorial independiente enfocado en información, cultura, academia y sociedad.</p>
-        </div>
-        <div class="footer-col"><h4>Accesos directos</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="sobre-nosotros.html">Nosotros</a></li><li><a href="contactanos.html">Contactanos</a></li></ul></div>
-        <div class="footer-col"><h4>Secciones</h4><ul><li><a href="index.html#radar">Radar</a></li><li><a href="index.html#cultura">Cultura</a></li><li><a href="index.html#educacion">Vida Académica</a></li><li><a href="index.html#medioambiente">Medioambiente</a></li></ul></div>
-        <div class="footer-col"><h4>Transparencia</h4><ul><li><a href="politica-editorial.html">Política Editorial</a></li><li><a href="politica-de-privacidad.html">Política de Privacidad</a></li><li><a href="politica-de-cookies.html">Política de Cookies</a></li><li><a href="terminos-y-condiciones-de-uso.html">Términos</a></li><li><a href="aviso-legal.html">Aviso Legal</a></li></ul></div>
-      </div>
-      <div class="footer-bottom"><span>&#169; 2026 Heliot Media</span><div class="footer-social"><a href="https://www.instagram.com/heliotmedia" target="_blank">Instagram</a></div></div>
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <button class="search-close" id="searchClose" aria-label="Cerrar">✕</button>
+    <div class="search-container">
+      <input class="search-input" id="searchInput" placeholder="Buscar en Heliot Media..." type="text" autocomplete="off">
+      <button class="search-submit-btn" id="searchButton" aria-label="Buscar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
     </div>
+    <div class="search-results" id="searchResults"></div>
+    <p class="search-hint">Presiona ESC para cerrar</p>
   </div>
+</div>
 
-  <div class="search-overlay" id="searchOverlay">
-    <div class="search-modal">
-      <button class="search-close" id="searchClose">&#10005;</button>
-      <div class="search-container">
-        <input class="search-input" id="searchInput" placeholder="Buscar en Heliot Media..." type="text"/>
-        <button class="search-submit-btn" id="searchButton"><svg fill="none" height="22" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="22"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg></button>
-      </div>
-      <div class="search-results" id="searchResults"></div>
-      <p class="search-hint">Presiona ESC para cerrar</p>
-    </div>
-  </div>
+<script src="app.js" defer></script>
+<script>
+document.getElementById('contact-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  var btn = document.getElementById('submit-btn');
+  var original = btn.textContent;
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
 
-  <script>
-    (function() {
-      var cursor = document.getElementById('customCursor'); if (!cursor) return;
-      document.addEventListener('mousemove', function(e) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-      document.addEventListener('mouseleave', function() { cursor.style.opacity = '0'; });
-      document.addEventListener('mouseenter', function() { cursor.style.opacity = '0.9'; });
-    })();
-    var header = document.getElementById('mainHeader'), ticking = false;
-    window.addEventListener('scroll', function() {
-      if (!ticking) { requestAnimationFrame(function() { header.classList.toggle('scroll-hidden', window.pageYOffset > 50); ticking = false; }); ticking = true; }
-    });
-    var mobileToggle = document.getElementById('mobileToggle'), navMain = document.getElementById('navMain');
-    if (mobileToggle) mobileToggle.addEventListener('click', function() { navMain.classList.toggle('active'); });
-    document.querySelectorAll('.nav-main a').forEach(function(link) { link.addEventListener('click', function() { if (window.innerWidth <= 768) navMain.classList.remove('active'); }); });
-    document.querySelectorAll('.dropdown').forEach(function(dropdown) {
-      var btn = dropdown.querySelector('.dropbtn');
-      btn.addEventListener('click', function(e) { if (window.innerWidth <= 768) { e.preventDefault(); dropdown.classList.toggle('active'); } });
-    });
-    (function() {
-      var searchInput = document.getElementById('searchInput'), searchButton = document.getElementById('searchButton'), resultsContainer = document.getElementById('searchResults'), overlay = document.getElementById('searchOverlay'), closeBtn = document.getElementById('searchClose'), toggleBtn = document.getElementById('searchToggle');
-      if (!searchInput || !resultsContainer) return;
-      var searchTimeout;
-      function performSearch(query) {
-        if (!query || query.length < 2) { resultsContainer.innerHTML = ''; return; }
-        resultsContainer.innerHTML = '<div class="loading">Buscando...</div>';
-        var allLinks = [];
-        document.querySelectorAll('.nav-main a, .submenu a, .footer a').forEach(function(link) {
-          var href = link.getAttribute('href'), text = link.textContent.trim();
-          if (href && href.indexOf('javascript:') === -1 && href.indexOf('#') === -1 && href.indexOf('mailto:') === -1) { allLinks.push({ title: text, url: href, type: 'Página' }); }
-        });
-        var known = [ {title:'Inicio', url:'index.html'}, {title:'El tiempo', url:'el-tiempo.html'}, {title:'Quienes somos', url:'sobre-nosotros.html'}, {title:'Política editorial', url:'politica-editorial.html'}, {title:'Beneficios', url:'beneficios.html'}, {title:'CIDE', url:'cide-heliot.html'}, {title:'Aranceles', url:'aranceles.html'}, {title:'Promociones', url:'promociones.html'}, {title:'Reservar', url:'reservas.html'}, {title:'Pago Online', url:'pago-online.html'}, {title:'Contacto', url:'contactanos.html'} ];
-        known.forEach(function(p) { if (!allLinks.some(function(item) { return item.url === p.url; })) { allLinks.push({ title: p.title, url: p.url, type: 'Página' }); } });
-        var results = allLinks.filter(function(item) { return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1; });
-        if (results.length === 0) { resultsContainer.innerHTML = '<div class="no-results">No se encontraron resultados para "<strong>' + query + '</strong>"</div>'; } else { var html = ''; results.slice(0,10).forEach(function(result) { html += '<div class="result-item"><a href="' + result.url + '">' + result.title + '</a><div class="result-type">' + result.type + '</div></div>'; }); resultsContainer.innerHTML = html; }
-      }
-      searchInput.addEventListener('input', function() { clearTimeout(searchTimeout); var q = this.value.trim(); if (q.length >= 2) { searchTimeout = setTimeout(function() { performSearch(q); }, 300); } else { resultsContainer.innerHTML = ''; } });
-      searchInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); var q = this.value.trim(); if (q.length >= 2) performSearch(q); } });
-      if (searchButton) searchButton.addEventListener('click', function() { var q = searchInput.value.trim(); if (q.length >= 2) performSearch(q); });
-      function closeSearch() { overlay.classList.remove('active'); resultsContainer.innerHTML = ''; if (searchInput) searchInput.value = ''; }
-      if (closeBtn) closeBtn.addEventListener('click', closeSearch);
-      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeSearch(); });
-      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSearch(); });
-      if (toggleBtn) toggleBtn.addEventListener('click', function(e) { e.stopPropagation(); overlay.classList.add('active'); setTimeout(function() { if (searchInput) searchInput.focus(); }, 300); });
-    })();
+  var data = {
+    Nombre: document.getElementById('name').value,
+    Correo: document.getElementById('email').value,
+    Asunto: document.getElementById('subject').value,
+    Mensaje: document.getElementById('message').value
+  };
 
-    // Script del formulario
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var btn = document.getElementById('submit-btn');
-      btn.textContent = 'Enviando...';
-      btn.disabled = true;
-      var data = { Nombre: document.getElementById('name').value, Correo: document.getElementById('email').value, Asunto: document.getElementById('subject').value, Mensaje: document.getElementById('message').value };
-      fetch('https://formsubmit.co/ajax/alexhrnndz32@gmail.com', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(function(response) { return response.json(); })
-      .then(function(data) {
-        if (data.success === 'true' || data.message === 'OK') {
-          alert('✅ Mensaje enviado. Te responderemos en 24-48 horas.');
-          document.getElementById('contact-form').reset();
-        } else { throw new Error('Error'); }
-      }).catch(function() {
-        alert('❌ Hubo un error. Por favor, intenta de nuevo o escríbenos a alexhrnndz32@gmail.com');
-      }).finally(function() {
-        btn.textContent = 'Enviar';
-        btn.disabled = false;
-      });
-    });
-  </script>
+  fetch('https://formsubmit.co/ajax/contact.heliot@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.success === 'true' || res.success === true || res.message === 'OK') {
+      alert('Mensaje enviado. Te responderemos pronto.');
+      document.getElementById('contact-form').reset();
+    } else {
+      throw new Error('Error');
+    }
+  })
+  .catch(() => alert('No se pudo enviar. Intenta de nuevo.'))
+  .finally(() => { btn.textContent = original; btn.disabled = false; });
+});
+</script>
 </body>
 </html>
