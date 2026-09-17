@@ -1,205 +1,200 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Promociones · Heliot Media</title>
-  <link href='https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;500;600;700;800&amp;display=swap' rel='stylesheet'/>
-  <link href='https://use.typekit.net/yyi3lii.css' rel='stylesheet'/>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Promociones · Heliot Media</title>
+<meta name="description" content="Promociones especiales de Heliot Media. Paquetes fotográficos desde $1 para estudiantes y grupos.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://use.typekit.net/yyi3lii.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="custom-cursor" id="customCursor"></div>
-  <div class="header" id="mainHeader">
-    <div class="header-inner">
-      <div class="logo"><h1><a href="index.html">Heliot Media</a></h1></div>
-      <ul class="nav-main" id="navMain">
-        <li class="dropdown"><button class="dropbtn">Nosotros</button><ul class="submenu"><li><a href="sobre-nosotros.html">Quienes somos</a></li><li><a href="politica-editorial.html">Política editorial</a></li><li><a href="https://heliotacademy.milaulas.com/">Campus virtual</a></li></ul></li>
-        <li class="dropdown"><button class="dropbtn">Vinculación Social</button><ul class="submenu"><li><a href="beneficios.html">Beneficios y Alianzas</a></li><li><a href="cide-heliot.html">Centro de Innovación</a></li></ul></li>
-        <li class="dropdown"><button class="dropbtn">Radar</button><ul class="submenu"><li><a href="index.html#radar">Radar de novedades</a></li><li><a href="index.html#univo">Acontecer UNIVO</a></li><li><a href="index.html#ugb">Actualidad UGB</a></li><li><a href="index.html#inya">Novedades INYA</a></li></ul></li>
-        <li><a href="el-tiempo.html">El tiempo</a></li>
-        <li class="dropdown"><button class="dropbtn">Heliot Media</button><ul class="submenu"><li><a href="sobre-nosotros.html">Sobre Nosotros</a></li><li><a href="aranceles.html">Aranceles</a></li><li><a href="promociones.html">Promociones</a></li><li><a href="reservas.html">Reservar</a></li><li><a href="pago-online.html">Pago Online</a></li></ul></li>
-      </ul>
-      <button aria-label="Buscar" class="search-toggle" id="searchToggle"><svg fill="none" height="20" stroke="#00406e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="20"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg></button>
-      <button aria-label="Menu" class="menu-mobile-toggle" id="mobileToggle">&#9776;</button>
-    </div>
+
+<header class="header" id="mainHeader">
+  <div class="header-inner">
+    <div class="logo"><a href="index.html">heliot<span class="logo-dot">.</span></a></div>
+    <ul class="nav-main" id="navMain">
+      <li><a href="index.html">Inicio</a></li>
+      <li class="dropdown">
+        <button class="dropbtn">Nosotros</button>
+        <ul class="submenu">
+          <li><a href="sobre-nosotros.html">Quiénes somos</a></li>
+          <li><a href="sobre-nosotros.html#equipo">Equipo</a></li>
+          <li><a href="politica-editorial.html">Política editorial</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <button class="dropbtn">Servicios</button>
+        <ul class="submenu">
+          <li><a href="aranceles.html">Aranceles</a></li>
+          <li><a href="promociones.html">Promociones</a></li>
+          <li><a href="contratar.html">Reservar sesión</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <button class="dropbtn">Alianzas</button>
+        <ul class="submenu">
+          <li><a href="beneficios.html">Beneficios</a></li>
+          <li><a href="cide-heliot.html">CIDE</a></li>
+        </ul>
+      </li>
+      <li><a href="contactanos.html">Contacto</a></li>
+    </ul>
+    <button class="search-toggle" id="searchToggle" aria-label="Buscar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="menu-mobile-toggle" id="mobileToggle" aria-label="Menú" aria-expanded="false">☰</button>
   </div>
+</header>
 
-  <div class="container" style="margin-top:30px;">
-    <div class="post-page">
-      <div class="post-body">
-        <div class="paquetes-container">
-          <div class="paquetes-divider"><span class="paquetes-divider-line"></span></div>
-          <div style="margin-bottom:25px; text-align:center;">
-            <h2 style="color:#00406e; font-family:'Playfair Display',serif; font-size:2rem;">PROMOCIÓN ESPECIAL DÍA DEL ALUMNO</h2>
-            <p style="color:#5a6c7d; font-size:1.2rem; font-weight:500;">Heliot Media - "Capturamos tus mejores momentos"</p>
-          </div>
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Promociones</span>
+    <h1 class="display">Día del Alumno</h1>
+    <p>Paquetes especiales por tiempo limitado para estudiantes del Instituto Nacional de Yamabal y comunidades cercanas.</p>
+  </div>
+</section>
 
-          <div class="paquete-card">
-            <h3>Paquete Básico</h3>
-            <div class="paquete-sub">Especial Día del Alumno</div>
-            <div class="paquete-precio">$1.00 <small>USD</small></div>
-            <span class="badge" style="background:#F3AF13;color:#003268;">promo especial</span>
-            <div class="paquete-tabla-wrap">
-              <table class="paquete-tabla">
-                <thead><tr><th>Incluye</th><th>Detalle</th></tr></thead>
-                <tbody>
-                  <tr><td>Fotos</td><td>1 fotografía digital editada</td></tr>
-                  <tr><td>Entrega</td><td>Entrega digital por WhatsApp o correo</td></tr>
-                  <tr><td>Estilo</td><td>Fondo temático Día del Alumno</td></tr>
-                  <tr><td>Edición</td><td>Edición de color profesional</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+<section class="section">
+  <div class="container">
+    <div class="pricing-grid">
 
-          <div class="paquete-card">
-            <h3>Paquete Amigos</h3>
-            <div class="paquete-sub">Ideal para compartir</div>
-            <div class="paquete-precio">$1.75 <small>USD</small></div>
-            <span class="badge" style="background:#F3AF13;color:#003268;">promo especial</span>
-            <div class="paquete-tabla-wrap">
-              <table class="paquete-tabla">
-                <thead><tr><th>Incluye</th><th>Detalle</th></tr></thead>
-                <tbody>
-                  <tr><td>Fotos</td><td>3 fotografías digitales editadas</td></tr>
-                  <tr><td>Contenido</td><td>Foto individual y grupal</td></tr>
-                  <tr><td>Entrega</td><td>Entrega digital inmediata</td></tr>
-                  <tr><td>Estilo</td><td>Marcos temáticos del Día del Alumno</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <article class="price-card">
+        <span class="price-badge">Promo</span>
+        <h3 class="price-title">Básico</h3>
+        <p class="price-sub">Especial Día del Alumno</p>
+        <div class="price-amount">$1 <small>USD</small></div>
+        <p class="price-unit">por persona</p>
+        <ul class="price-list">
+          <li>1 fotografía digital editada</li>
+          <li>Fondo temático Día del Alumno</li>
+          <li>Edición de color profesional</li>
+          <li>Entrega por WhatsApp o correo</li>
+        </ul>
+        <a href="contratar.html" class="btn btn-outline">Reservar</a>
+      </article>
 
-          <div class="paquete-card featured">
-            <h3>Paquete Premium</h3>
-            <div class="paquete-sub">Para quienes desean conservar más recuerdos</div>
-            <div class="paquete-precio">$2.25 <small>USD</small></div>
-            <span class="badge" style="background:#F3AF13;color:#003268;">promo especial</span>
-            <div class="paquete-tabla-wrap">
-              <table class="paquete-tabla">
-                <thead><tr><th>Incluye</th><th>Detalle</th></tr></thead>
-                <tbody>
-                  <tr><td>Fotos</td><td>5 fotografías digitales editadas</td></tr>
-                  <tr><td>Variedad</td><td>Diferentes poses y escenarios</td></tr>
-                  <tr><td>Contenido</td><td>Foto individual y grupal</td></tr>
-                  <tr><td>Edición</td><td>Retoque profesional</td></tr>
-                  <tr><td>Extra</td><td>Diseño con nombre personalizado</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <article class="price-card">
+        <span class="price-badge">Promo</span>
+        <h3 class="price-title">Amigos</h3>
+        <p class="price-sub">Ideal para compartir</p>
+        <div class="price-amount">$1.75 <small>USD</small></div>
+        <p class="price-unit">por grupo</p>
+        <ul class="price-list">
+          <li>3 fotografías digitales editadas</li>
+          <li>Foto individual y grupal</li>
+          <li>Marcos temáticos Día del Alumno</li>
+          <li>Entrega digital inmediata</li>
+        </ul>
+        <a href="contratar.html" class="btn btn-outline">Reservar</a>
+      </article>
 
-          <div class="paquete-card featured" style="background:#fffcf5; border-left-color:#F3AF13;">
-            <h3>Estrella Heliot</h3>
-            <div class="paquete-sub">El paquete más completo</div>
-            <div class="paquete-precio">$3.00 <small>USD</small></div>
-            <span class="badge" style="background:#00406e; color:white;">estrella ⭐</span>
-            <div class="paquete-tabla-wrap">
-              <table class="paquete-tabla">
-                <thead><tr><th>Incluye</th><th>Detalle</th></tr></thead>
-                <tbody>
-                  <tr><td>Fotos</td><td>10 fotografías digitales editadas</td></tr>
-                  <tr><td>Sesión</td><td>Sesión completa de 10 minutos</td></tr>
-                  <tr><td>Contenido</td><td>Fotos individuales y grupales ilimitadas durante la sesión</td></tr>
-                  <tr><td>Edición</td><td>Edición premium</td></tr>
-                  <tr><td>Diseño</td><td>Diseño conmemorativo del Día del Alumno</td></tr>
-                  <tr><td>Redes</td><td>Fotografía destacada para redes sociales</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <article class="price-card">
+        <span class="price-badge">Promo</span>
+        <h3 class="price-title">Premium</h3>
+        <p class="price-sub">Más recuerdos para ti</p>
+        <div class="price-amount">$2.25 <small>USD</small></div>
+        <p class="price-unit">por persona</p>
+        <ul class="price-list">
+          <li>5 fotografías digitales editadas</li>
+          <li>Diferentes poses y escenarios</li>
+          <li>Foto individual y grupal</li>
+          <li>Retoque profesional</li>
+          <li>Diseño con nombre personalizado</li>
+        </ul>
+        <a href="contratar.html" class="btn btn-outline">Reservar</a>
+      </article>
 
-          <div style="background:#eef4fa; border-left:5px solid #F9B410; border-radius:16px; padding:20px 25px; text-align:center; margin:-15px 0 30px;">
-            <p style="color:#003268; font-weight:600;">PROMOCIÓN ESPECIAL GRUPAL</p>
-            <p>5 alumnos o más reciben una fotografía grupal adicional GRATIS.</p>
-          </div>
+      <article class="price-card featured">
+        <span class="price-badge">Estrella</span>
+        <h3 class="price-title">Estrella Heliot</h3>
+        <p class="price-sub">El paquete más completo</p>
+        <div class="price-amount">$3 <small>USD</small></div>
+        <p class="price-unit">por persona</p>
+        <ul class="price-list">
+          <li>10 fotografías digitales editadas</li>
+          <li>Sesión completa de 10 minutos</li>
+          <li>Fotos individuales y grupales</li>
+          <li>Edición premium</li>
+          <li>Diseño conmemorativo</li>
+          <li>Fotografía destacada para redes</li>
+        </ul>
+        <a href="contratar.html" class="btn btn-gold">Reservar</a>
+      </article>
 
-          <div class="paquete-actions">
-            <a class="btn-action btn-reservar" href="reservas.html">Ver aranceles</a>
-            <a class="btn-action btn-promociones" href="pago-online.html">Ir a pagos</a>
-          </div>
-          <div class="paquete-footer-note">
-            <p>Promoción válida por tiempo limitado. Todos los paquetes incluyen edición profesional.</p>
-            <p class="aranceles-leyenda">Sujeto a <a href="terminos-y-condiciones-de-uso.html" style="color:#00406e;text-decoration:underline;">Términos</a>.</p>
-          </div>
-        </div>
+    </div>
+
+    <div class="card mt-32" style="border-left: 4px solid var(--gold); border-radius: var(--radius);">
+      <h4 style="color: var(--black); margin-bottom: 8px;">Promoción grupal</h4>
+      <p style="margin: 0; color: var(--text-muted);">5 alumnos o más reciben una <strong style="color: var(--black);">fotografía grupal adicional gratis</strong>.</p>
+    </div>
+
+    <p class="text-center mt-32" style="font-size: 0.85rem; color: var(--text-muted);">
+      Promoción válida por tiempo limitado. Sujeto a <a href="terminos-y-condiciones-de-uso.html" style="color: var(--black); font-weight: 600; border-bottom: 1.5px solid var(--gold);">Términos y Condiciones</a>.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>heliot<span class="logo-dot">.</span></h3>
+        <p class="tagline">Estudio fotográfico profesional en Yamabal, Morazán. Producción visual y comunicación digital con identidad.</p>
+        <span class="footer-slogan">Be eternal · Sé eterno</span>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="sobre-nosotros.html">Nosotros</a></li>
+          <li><a href="contactanos.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="aranceles.html">Aranceles</a></li>
+          <li><a href="promociones.html">Promociones</a></li>
+          <li><a href="contratar.html">Reservar</a></li>
+          <li><a href="beneficios.html">Beneficios</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Transparencia</h4>
+        <ul>
+          <li><a href="politica-editorial.html">Política Editorial</a></li>
+          <li><a href="politica-de-privacidad.html">Privacidad</a></li>
+          <li><a href="politica-de-cookies.html">Cookies</a></li>
+          <li><a href="terminos-y-condiciones-de-uso.html">Términos</a></li>
+          <li><a href="aviso-legal.html">Aviso Legal</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Heliot Media · Yamabal, Morazán, El Salvador</span>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/heliotmedia" target="_blank" rel="noopener">Instagram</a>
       </div>
     </div>
   </div>
+</footer>
 
-  <div class="footer">
-    <div class="footer-inner">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div style="margin-bottom:12px;"><img alt="Heliot Media" height="60" src="https://blogger.googleusercontent.com/img/a/AVvXsEgjN90ubujO6aF76PMuNTY7el1YR7BDF-CsXglaMEAB_FSzryOks4Zflmnn0fZlXBulUQtp64A5ZJt8IalatFXCNNV2K-qI09uqllYLvcsA_maBOKJ8pggVjMz4OMdG8HZTr2Lyj0dJlThvA37O3PN1IF9BYtaQigzIOVnh9Jovq5FY26YVU_uwK0p0nMuw" style="width:200px;height:auto;"/></div>
-          <h3>Heliot Media</h3>
-          <p class="tagline">Proyecto editorial independiente enfocado en información, cultura, academia y sociedad.</p>
-        </div>
-        <div class="footer-col"><h4>Accesos directos</h4><ul><li><a href="index.html">Inicio</a></li><li><a href="sobre-nosotros.html">Nosotros</a></li><li><a href="contactanos.html">Contactanos</a></li></ul></div>
-        <div class="footer-col"><h4>Secciones</h4><ul><li><a href="index.html#radar">Radar</a></li><li><a href="index.html#cultura">Cultura</a></li><li><a href="index.html#educacion">Vida Académica</a></li><li><a href="index.html#medioambiente">Medioambiente</a></li></ul></div>
-        <div class="footer-col"><h4>Transparencia</h4><ul><li><a href="politica-editorial.html">Política Editorial</a></li><li><a href="politica-de-privacidad.html">Política de Privacidad</a></li><li><a href="politica-de-cookies.html">Política de Cookies</a></li><li><a href="terminos-y-condiciones-de-uso.html">Términos</a></li><li><a href="aviso-legal.html">Aviso Legal</a></li></ul></div>
-      </div>
-      <div class="footer-bottom"><span>&#169; 2026 Heliot Media</span><div class="footer-social"><a href="https://www.instagram.com/heliotmedia" target="_blank">Instagram</a></div></div>
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-modal">
+    <button class="search-close" id="searchClose" aria-label="Cerrar">✕</button>
+    <div class="search-container">
+      <input class="search-input" id="searchInput" placeholder="Buscar en Heliot Media..." type="text" autocomplete="off">
+      <button class="search-submit-btn" id="searchButton" aria-label="Buscar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
     </div>
+    <div class="search-results" id="searchResults"></div>
+    <p class="search-hint">Presiona ESC para cerrar</p>
   </div>
+</div>
 
-  <div class="search-overlay" id="searchOverlay">
-    <div class="search-modal">
-      <button class="search-close" id="searchClose">&#10005;</button>
-      <div class="search-container">
-        <input class="search-input" id="searchInput" placeholder="Buscar en Heliot Media..." type="text"/>
-        <button class="search-submit-btn" id="searchButton"><svg fill="none" height="22" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="22"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/></svg></button>
-      </div>
-      <div class="search-results" id="searchResults"></div>
-      <p class="search-hint">Presiona ESC para cerrar</p>
-    </div>
-  </div>
-
-  <script>
-    (function() {
-      var cursor = document.getElementById('customCursor'); if (!cursor) return;
-      document.addEventListener('mousemove', function(e) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-      document.addEventListener('mouseleave', function() { cursor.style.opacity = '0'; });
-      document.addEventListener('mouseenter', function() { cursor.style.opacity = '0.9'; });
-    })();
-    var header = document.getElementById('mainHeader'), ticking = false;
-    window.addEventListener('scroll', function() {
-      if (!ticking) { requestAnimationFrame(function() { header.classList.toggle('scroll-hidden', window.pageYOffset > 50); ticking = false; }); ticking = true; }
-    });
-    var mobileToggle = document.getElementById('mobileToggle'), navMain = document.getElementById('navMain');
-    if (mobileToggle) mobileToggle.addEventListener('click', function() { navMain.classList.toggle('active'); });
-    document.querySelectorAll('.nav-main a').forEach(function(link) { link.addEventListener('click', function() { if (window.innerWidth <= 768) navMain.classList.remove('active'); }); });
-    document.querySelectorAll('.dropdown').forEach(function(dropdown) {
-      var btn = dropdown.querySelector('.dropbtn');
-      btn.addEventListener('click', function(e) { if (window.innerWidth <= 768) { e.preventDefault(); dropdown.classList.toggle('active'); } });
-    });
-    (function() {
-      var searchInput = document.getElementById('searchInput'), searchButton = document.getElementById('searchButton'), resultsContainer = document.getElementById('searchResults'), overlay = document.getElementById('searchOverlay'), closeBtn = document.getElementById('searchClose'), toggleBtn = document.getElementById('searchToggle');
-      if (!searchInput || !resultsContainer) return;
-      var searchTimeout;
-      function performSearch(query) {
-        if (!query || query.length < 2) { resultsContainer.innerHTML = ''; return; }
-        resultsContainer.innerHTML = '<div class="loading">Buscando...</div>';
-        var allLinks = [];
-        document.querySelectorAll('.nav-main a, .submenu a, .footer a').forEach(function(link) {
-          var href = link.getAttribute('href'), text = link.textContent.trim();
-          if (href && href.indexOf('javascript:') === -1 && href.indexOf('#') === -1 && href.indexOf('mailto:') === -1) { allLinks.push({ title: text, url: href, type: 'Página' }); }
-        });
-        var known = [ {title:'Inicio', url:'index.html'}, {title:'El tiempo', url:'el-tiempo.html'}, {title:'Quienes somos', url:'sobre-nosotros.html'}, {title:'Política editorial', url:'politica-editorial.html'}, {title:'Beneficios', url:'beneficios.html'}, {title:'CIDE', url:'cide-heliot.html'}, {title:'Aranceles', url:'aranceles.html'}, {title:'Promociones', url:'promociones.html'}, {title:'Reservar', url:'reservas.html'}, {title:'Pago Online', url:'pago-online.html'}, {title:'Contacto', url:'contactanos.html'} ];
-        known.forEach(function(p) { if (!allLinks.some(function(item) { return item.url === p.url; })) { allLinks.push({ title: p.title, url: p.url, type: 'Página' }); } });
-        var results = allLinks.filter(function(item) { return item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1; });
-        if (results.length === 0) { resultsContainer.innerHTML = '<div class="no-results">No se encontraron resultados para "<strong>' + query + '</strong>"</div>'; } else { var html = ''; results.slice(0,10).forEach(function(result) { html += '<div class="result-item"><a href="' + result.url + '">' + result.title + '</a><div class="result-type">' + result.type + '</div></div>'; }); resultsContainer.innerHTML = html; }
-      }
-      searchInput.addEventListener('input', function() { clearTimeout(searchTimeout); var q = this.value.trim(); if (q.length >= 2) { searchTimeout = setTimeout(function() { performSearch(q); }, 300); } else { resultsContainer.innerHTML = ''; } });
-      searchInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); var q = this.value.trim(); if (q.length >= 2) performSearch(q); } });
-      if (searchButton) searchButton.addEventListener('click', function() { var q = searchInput.value.trim(); if (q.length >= 2) performSearch(q); });
-      function closeSearch() { overlay.classList.remove('active'); resultsContainer.innerHTML = ''; if (searchInput) searchInput.value = ''; }
-      if (closeBtn) closeBtn.addEventListener('click', closeSearch);
-      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeSearch(); });
-      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSearch(); });
-      if (toggleBtn) toggleBtn.addEventListener('click', function(e) { e.stopPropagation(); overlay.classList.add('active'); setTimeout(function() { if (searchInput) searchInput.focus(); }, 300); });
-    })();
-  </script>
+<script src="app.js" defer></script>
 </body>
 </html>
