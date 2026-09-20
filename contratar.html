@@ -124,7 +124,7 @@
 
       <div class="tab-panel active" id="tab-regulares">
         <div class="pk-grid">
-          <div class="pk" data-package="basico" data-price="5.00" data-wompi="https://s.wompi.sv/REEMPLAZAR1">
+          <div class="pk" data-package="basico" data-price="5.00">
             <div class="radio"></div>
             <h4>Básico</h4>
             <div class="sub">Para momentos simples</div>
@@ -136,7 +136,7 @@
               <li>Entrega en 2 días hábiles</li>
             </ul>
           </div>
-          <div class="pk" data-package="amigos" data-price="8.00" data-wompi="https://s.wompi.sv/REEMPLAZAR2">
+          <div class="pk" data-package="amigos" data-price="8.00">
             <div class="radio"></div>
             <h4>Amigos / Dúo</h4>
             <div class="sub">Ideal para compartir</div>
@@ -148,7 +148,7 @@
               <li>Entrega en 2 días hábiles</li>
             </ul>
           </div>
-          <div class="pk featured" data-package="premium" data-price="10.00" data-wompi="https://s.wompi.sv/REEMPLAZAR3">
+          <div class="pk featured" data-package="premium" data-price="10.00">
             <span class="pk-badge">Recomendado</span>
             <div class="radio"></div>
             <h4>Premium Plus</h4>
@@ -167,7 +167,7 @@
 
       <div class="tab-panel" id="tab-promos">
         <div class="pk-grid">
-          <div class="pk" data-package="basico-promo" data-price="1.00" data-wompi="https://s.wompi.sv/REEMPLAZAR4">
+          <div class="pk" data-package="basico-promo" data-price="1.00">
             <span class="pk-badge">Promo</span>
             <div class="radio"></div>
             <h4>Básico Promo</h4>
@@ -179,7 +179,7 @@
               <li>Entrega digital</li>
             </ul>
           </div>
-          <div class="pk" data-package="amigos-promo" data-price="1.75" data-wompi="https://s.wompi.sv/REEMPLAZAR5">
+          <div class="pk" data-package="amigos-promo" data-price="1.75">
             <span class="pk-badge">Promo</span>
             <div class="radio"></div>
             <h4>Amigos Promo</h4>
@@ -191,7 +191,7 @@
               <li>Marcos temáticos</li>
             </ul>
           </div>
-          <div class="pk featured" data-package="premium-promo" data-price="2.25" data-wompi="https://s.wompi.sv/REEMPLAZAR6">
+          <div class="pk featured" data-package="premium-promo" data-price="2.25">
             <span class="pk-badge">Promo</span>
             <div class="radio"></div>
             <h4>Premium Promo</h4>
@@ -203,7 +203,7 @@
               <li>Diseño con nombre</li>
             </ul>
           </div>
-          <div class="pk featured" data-package="estrella" data-price="3.00" data-wompi="https://s.wompi.sv/REEMPLAZAR7">
+          <div class="pk featured" data-package="estrella" data-price="3.00">
             <span class="pk-badge">Estrella</span>
             <div class="radio"></div>
             <h4>Estrella Heliot</h4>
@@ -285,15 +285,7 @@
   </div>
 </section>
 
-<!-- POPUPS -->
-<div class="popup" id="popup-success">
-  <div class="popup-content">
-    <div class="icon">✓</div>
-    <h3>Datos enviados</h3>
-    <p>Serás redirigido a Wompi para completar tu pago.</p>
-    <button class="btn btn-gold" id="btnIrPagar">Ir a pagar</button>
-  </div>
-</div>
+<!-- POPUP ERROR (único popup restante) -->
 <div class="popup" id="popup-error">
   <div class="popup-content">
     <div class="icon">⚠</div>
@@ -363,9 +355,11 @@
 </div>
 
 <script src="app.js" defer></script>
+<script src="pagos.js" defer></script>
 <script>
 (function(){
   'use strict';
+
   var FORM_ENDPOINT = 'https://formsubmit.co/ajax/contact.heliot@gmail.com';
   var paquete = null;
 
@@ -375,7 +369,6 @@
   var seccionPaquetes = document.getElementById('paquetes-section');
   var seccionDatos = document.getElementById('datos-section');
   var resumenPaquete = document.getElementById('resumenPaquete');
-  var popupSuccess = document.getElementById('popup-success');
   var popupError = document.getElementById('popup-error');
   var errorMensaje = document.getElementById('error-mensaje');
 
@@ -400,10 +393,10 @@
       this.classList.add('selected');
       var tabActivo = document.querySelector('.tab-btn.active').getAttribute('data-tab');
       paquete = {
+        id: this.getAttribute('data-package'),
         nombre: this.querySelector('h4').textContent,
         precio: parseFloat(this.getAttribute('data-price')),
         precioDisplay: '$' + parseFloat(this.getAttribute('data-price')).toFixed(2),
-        wompi: this.getAttribute('data-wompi'),
         tipo: tabActivo === 'promos' ? 'Promoción' : 'Regular'
       };
       btnContinuar.disabled = false;
@@ -422,6 +415,7 @@
     document.getElementById('step2').className = 'step active';
     seccionDatos.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
   btnVolver.addEventListener('click', function(){
     seccionPaquetes.classList.remove('hidden');
     seccionDatos.classList.add('hidden');
@@ -456,27 +450,45 @@
   document.getElementById('btnCerrarError').addEventListener('click', function(){
     popupError.classList.remove('active');
   });
-  document.getElementById('btnIrPagar').addEventListener('click', function(){
-    if (paquete && paquete.wompi) window.location.href = paquete.wompi;
-  });
 
   document.getElementById('contratar-formulario').addEventListener('submit', function(e){
     e.preventDefault();
+
     var err = validarFechaHora();
     if (err) { mostrarError(err); return; }
 
     var nombre = document.getElementById('nombreCliente').value.trim();
     var email = document.getElementById('emailCliente').value.trim();
     var telefono = document.getElementById('telefonoCliente').value.trim();
+    var fecha = document.getElementById('fechaCliente').value;
+    var hora = document.getElementById('horaCliente').value;
+    var comentarios = document.getElementById('comentariosCliente').value.trim();
     var terminos = document.getElementById('terminosCheck').checked;
-    if (!nombre || !email || !telefono || !terminos) {
-      mostrarError('Completa todos los campos obligatorios y acepta los Términos.'); return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { mostrarError('Correo electrónico no válido.'); return; }
-    if (!/^[0-9]{8}$/.test(telefono)) { mostrarError('El teléfono debe tener 8 dígitos.'); return; }
+
+    if (!nombre || nombre.length < 3) { mostrarError('Escribe tu nombre completo.'); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { mostrarError('Correo electrónico no válido.'); return; }
+    if (!telefono || !/^[0-9]{8}$/.test(telefono)) { mostrarError('El teléfono debe tener 8 dígitos.'); return; }
+    if (!fecha || !hora) { mostrarError('Indica fecha y hora preferidas.'); return; }
+    if (!terminos) { mostrarError('Debes aceptar los Términos y Condiciones.'); return; }
+    if (!paquete) { mostrarError('Selecciona un paquete.'); return; }
 
     btnEnviar.disabled = true;
     btnEnviar.textContent = 'Enviando...';
+
+    // Guardar reserva localmente antes de enviar
+    var reserva = {
+      paqueteId: paquete.id,
+      paqueteNombre: paquete.nombre,
+      precio: paquete.precioDisplay,
+      tipo: paquete.tipo,
+      nombre: nombre,
+      email: email,
+      telefono: telefono,
+      fecha: fecha,
+      hora: hora,
+      comentarios: comentarios
+    };
+    window.HeliotPagos.guardarReserva(reserva);
 
     var data = {};
     new FormData(this).forEach(function(v, k){ data[k] = v; });
@@ -489,9 +501,7 @@
     .then(function(r){ return r.json(); })
     .then(function(res){
       if (res.success === 'true' || res.success === true || res.message === 'OK') {
-        popupSuccess.classList.add('active');
-        document.getElementById('step2').className = 'step done';
-        document.getElementById('step3').className = 'step active';
+        window.location.href = 'verificacion.html';
       } else {
         throw new Error('Respuesta inválida del servidor');
       }
@@ -500,6 +510,7 @@
       mostrarError('No se pudo enviar. Intenta de nuevo o escríbenos a contact.heliot@gmail.com');
       btnEnviar.disabled = false;
       btnEnviar.textContent = '🔒 Pagar ahora';
+      window.HeliotPagos.limpiarReserva();
     });
   });
 })();
