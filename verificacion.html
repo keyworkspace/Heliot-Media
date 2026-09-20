@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verificación de reserva · Heliot Media</title>
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://use.typekit.net/yyi3lii.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.verif-wrap { padding: 64px 0 96px; }
+.verif-card {
+  max-width: 640px; margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px;
+  box-shadow: var(--shadow);
+}
+.verif-card h2 { font-family: var(--font-display); margin-bottom: 8px; color: var(--black); }
+.verif-card .lead { color: var(--text-muted); margin-bottom: 28px; }
+.verif-list { list-style: none; padding: 0; margin: 0 0 28px; border-top: 1px solid var(--border); }
+.verif-list li {
+  display: flex; justify-content: space-between; gap: 16px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+.verif-list li span:first-child { color: var(--text-muted); font-weight: 500; }
+.verif-list li span:last-child { color: var(--black); font-weight: 600; text-align: right; word-break: break-word; }
+.verif-total {
+  background: var(--g-50); border-left: 4px solid var(--gold);
+  border-radius: var(--radius); padding: 16px 20px; margin-bottom: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.verif-total strong { font-size: 1.15rem; color: var(--black); }
+.verif-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.verif-note { text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 18px; }
+.verif-bloqueado { text-align: center; padding: 24px; background: #fff5f5; border: 1px solid #ffd6d6; border-radius: var(--radius); color: #b71c1c; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<header class="header" id="mainHeader">
+  <div class="header-inner">
+    <div class="logo"><a href="index.html">heliot<span class="logo-dot">.</span></a></div>
+    <ul class="nav-main" id="navMain">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="aranceles.html">Aranceles</a></li>
+      <li><a href="promociones.html">Promociones</a></li>
+      <li><a href="contratar.html">Reservar sesión</a></li>
+      <li><a href="contactanos.html">Contacto</a></li>
+    </ul>
+    <button class="menu-mobile-toggle" id="mobileToggle" aria-label="Menú" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Paso 3 de 3</span>
+    <h1 class="display">Verifica tu reserva</h1>
+    <p>Revisa que todos los datos estén correctos antes de continuar al pago.</p>
+  </div>
+</section>
+
+<section class="verif-wrap">
+  <div class="container">
+    <div class="verif-card">
+      <div id="verif-bloqueado" class="verif-bloqueado hidden">
+        <p style="margin:0 0 12px;"><strong>No hay una reserva activa.</strong></p>
+        <p style="margin:0;">Vuelve a completar el formulario para continuar.</p>
+        <p style="margin-top:16px;"><a href="contratar.html" class="btn btn-gold">Volver a reservar</a></p>
+      </div>
+
+      <div id="verif-contenido">
+        <h2>Resumen de tu reserva</h2>
+        <p class="lead">Confirma los datos antes de pagar. Si algo está mal, puedes regresar y corregirlo.</p>
+
+        <ul class="verif-list">
+          <li><span>Paquete</span><span id="v-paquete">—</span></li>
+          <li><span>Tipo</span><span id="v-tipo">—</span></li>
+          <li><span>Nombre</span><span id="v-nombre">—</span></li>
+          <li><span>Correo</span><span id="v-email">—</span></li>
+          <li><span>Teléfono</span><span id="v-telefono">—</span></li>
+          <li><span>Fecha preferida</span><span id="v-fecha">—</span></li>
+          <li><span>Hora preferida</span><span id="v-hora">—</span></li>
+          <li id="v-com-row" class="hidden"><span>Comentarios</span><span id="v-com">—</span></li>
+        </ul>
+
+        <div class="verif-total">
+          <span style="color: var(--text-muted);">Total a pagar</span>
+          <strong id="v-total">—</strong>
+        </div>
+
+        <div class="verif-actions">
+          <a href="contratar.html" class="btn btn-outline" id="v-corregir">← Corregir datos</a>
+          <button class="btn btn-gold" id="v-pagar">🔒 Confirmar y pagar</button>
+        </div>
+
+        <p class="verif-note">Al continuar serás redirigido a Wompi, nuestra pasarela de pago segura.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <span>© 2026 Heliot Media · Yamabal, Morazán, El Salvador</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+<script src="pagos.js" defer></script>
+<script>
+(function(){
+  'use strict';
+
+  function mostrarBloqueado(){
+    document.getElementById('verif-bloqueado').classList.remove('hidden');
+    document.getElementById('verif-contenido').classList.add('hidden');
+  }
+
+  function fmtFecha(iso){
+    if (!iso) return '—';
+    var p = iso.split('-');
+    if (p.length !== 3) return iso;
+    return p[2] + '/' + p[1] + '/' + p[0];
+  }
+
+  function fmtHora(h){
+    if (!h) return '—';
+    var p = h.split(':');
+    if (p.length < 2) return h;
+    var hh = parseInt(p[0], 10);
+    var sufijo = hh >= 12 ? 'PM' : 'AM';
+    var h12 = (hh % 12) || 12;
+    return h12 + ':' + p[1] + ' ' + sufijo;
+  }
+
+  function init(){
+    if (!window.HeliotPagos || !window.HeliotPagos.reservaValida()) {
+      mostrarBloqueado();
+      return;
+    }
+    var r = window.HeliotPagos.leerReserva();
+    document.getElementById('v-paquete').textContent  = r.paqueteNombre || '—';
+    document.getElementById('v-tipo').textContent     = r.tipo || '—';
+    document.getElementById('v-nombre').textContent   = r.nombre || '—';
+    document.getElementById('v-email').textContent    = r.email || '—';
+    document.getElementById('v-telefono').textContent = r.telefono || '—';
+    document.getElementById('v-fecha').textContent    = fmtFecha(r.fecha);
+    document.getElementById('v-hora').textContent     = fmtHora(r.hora);
+    document.getElementById('v-total').textContent    = (r.precio || '—') + ' USD';
+    if (r.comentarios) {
+      document.getElementById('v-com').textContent = r.comentarios;
+      document.getElementById('v-com-row').classList.remove('hidden');
+    }
+  }
+
+  document.getElementById('v-pagar').addEventListener('click', function(){
+    var enlace = window.HeliotPagos.obtenerEnlace();
+    if (!enlace) { mostrarBloqueado(); return; }
+    window.HeliotPagos.limpiarReserva();
+    window.location.href = enlace;
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
