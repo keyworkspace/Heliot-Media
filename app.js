@@ -117,75 +117,84 @@
     });
   }
 })();
+
 /* ============================================================
-   HELIOT MEDIA — Aviso previo de actualización legal (popup global)
-   Notifica con anticipación el cambio de Términos y Condiciones,
-   conforme a la cláusula 2 de los T&C vigentes.
+   HELIOT MEDIA — Cargador de aviso legal
+   Lee avisos.js y muestra el aviso si no ha sido visto.
    ============================================================ */
 (function () {
   'use strict';
 
-  // --- Configuración del aviso ---
-  var AVISO_ID       = '2026-09-legal-v3.5'; // identificador único del aviso
-  var FECHA_CAMBIO   = '30 de septiembre de 2026'; // fecha en que entra en vigor
-  var DIAS_ANTICIPO  = '5 días hábiles'; // plazo de preaviso
-  var STORAGE_KEY    = 'heliot_legal_aviso_visto';
-
-  try {
-    if (localStorage.getItem(STORAGE_KEY) === AVISO_ID) return;
-  } catch (e) {
-    // Si localStorage no está disponible, se muestra siempre
+  function cargarAviso(callback) {
+    if (window.HELIOT_AVISO) { callback(); return; }
+    var s = document.createElement('script');
+    s.src = 'avisos.js';
+    s.onload = callback;
+    s.onerror = function () { /* silencioso */ };
+    document.head.appendChild(s);
   }
 
-  if (document.getElementById('legalPopup')) return;
+  function mostrarAviso(aviso) {
+    if (document.getElementById('legalPopup')) return;
 
-  var popup = document.createElement('div');
-  popup.id = 'legalPopup';
-  popup.className = 'legal-popup';
-  popup.setAttribute('role', 'dialog');
-  popup.setAttribute('aria-modal', 'true');
-  popup.setAttribute('aria-labelledby', 'legalPopupTitle');
-  popup.innerHTML =
-    '<div class="legal-popup-overlay" data-legal-close></div>' +
-    '<div class="legal-popup-content">' +
-      '<span class="legal-popup-eyebrow">Aviso previo</span>' +
-      '<h3 id="legalPopupTitle">Actualizaremos nuestros Términos y Condiciones</h3>' +
-      '<p>Te informamos que <strong>Heliot Media actualizará sus Términos y Condiciones y su Política de Privacidad</strong> el próximo <strong>' + FECHA_CAMBIO + '</strong>.</p>' +
-      '<p>Conforme a la cláusula 2 de nuestros Términos vigentes, este aviso se emite con al menos <strong>' + DIAS_ANTICIPO + '</strong> de anticipación. Las modificaciones no afectarán los contratos ya celebrados antes de su entrada en vigor.</p>' +
-      '<p>Te recomendamos revisar los documentos actualizados a partir de la fecha indicada. El uso continuado del sitio tras la entrada en vigor constituirá la aceptación plena de las modificaciones.</p>' +
-      '<div class="legal-popup-actions">' +
-        '<a href="terminos-y-condiciones-de-uso.html" class="btn btn-outline" target="_blank" rel="noopener">Ver Términos vigentes</a>' +
-        '<button type="button" class="btn btn-gold" id="legalPopupAccept">Entendido</button>' +
-      '</div>' +
-      '<p class="legal-popup-note">Este aviso no modifica los Términos vigentes. Solo notifica su próxima actualización.</p>' +
-    '</div>';
+    var popup = document.createElement('div');
+    popup.id = 'legalPopup';
+    popup.className = 'legal-popup';
+    popup.setAttribute('role', 'dialog');
+    popup.setAttribute('aria-modal', 'true');
+    popup.setAttribute('aria-labelledby', 'legalPopupTitle');
 
-  document.body.appendChild(popup);
+    var parrafosHTML = (aviso.parrafos || []).map(function (p) {
+      return '<p>' + p + '</p>';
+    }).join('');
 
-  var prevOverflow = document.body.style.overflow;
-  document.body.style.overflow = 'hidden';
+    popup.innerHTML =
+      '<div class="legal-popup-overlay" data-legal-close></div>' +
+      '<div class="legal-popup-content">' +
+        (aviso.eyebrow ? '<span class="legal-popup-eyebrow">' + aviso.eyebrow + '</span>' : '') +
+        '<h3 id="legalPopupTitle">' + (aviso.titulo || 'Aviso legal') + '</h3>' +
+        parrafosHTML +
+        '<div class="legal-popup-actions">' +
+          (aviso.enlaceUrl
+            ? '<a href="' + aviso.enlaceUrl + '" class="btn btn-outline" target="_blank" rel="noopener">' + (aviso.enlaceTexto || 'Ver más') + '</a>'
+            : '') +
+          '<button type="button" class="btn btn-gold" id="legalPopupAccept">' + (aviso.botonTexto || 'Entendido') + '</button>' +
+        '</div>' +
+        (aviso.nota ? '<p class="legal-popup-nota">' + aviso.nota + '</p>' : '') +
+      '</div>';
 
-  requestAnimationFrame(function () {
-    popup.classList.add('active');
+    document.body.appendChild(popup);
+
+    var prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    requestAnimationFrame(function () { popup.classList.add('active'); });
+
+    function cerrar() {
+      try { localStorage.setItem('heliot_legal_aviso_visto', aviso.id); } catch (e) {}
+      popup.classList.remove('active');
+      document.body.style.overflow = prevOverflow || '';
+      setTimeout(function () {
+        if (popup && popup.parentNode) popup.parentNode.removeChild(popup);
+      }, 300);
+      document.removeEventListener('keydown', onKey);
+    }
+
+    function onKey(e) { if (e.key === 'Escape') cerrar(); }
+
+    document.getElementById('legalPopupAccept').addEventListener('click', cerrar);
+    popup.querySelector('[data-legal-close]').addEventListener('click', cerrar);
+    document.addEventListener('keydown', onKey);
+  }
+
+  cargarAviso(function () {
+    var aviso = window.HELIOT_AVISO;
+    if (!aviso || !aviso.activo || !aviso.id) return;
+
+    var visto = null;
+    try { visto = localStorage.getItem('heliot_legal_aviso_visto'); } catch (e) {}
+    if (visto === aviso.id) return;
+
+    mostrarAviso(aviso);
   });
-
-  function cerrar() {
-    try {
-      localStorage.setItem(STORAGE_KEY, AVISO_ID);
-    } catch (e) { /* ignorar */ }
-    popup.classList.remove('active');
-    document.body.style.overflow = prevOverflow || '';
-    setTimeout(function () {
-      if (popup && popup.parentNode) popup.parentNode.removeChild(popup);
-    }, 300);
-    document.removeEventListener('keydown', onKey);
-  }
-
-  function onKey(e) {
-    if (e.key === 'Escape') cerrar();
-  }
-
-  document.getElementById('legalPopupAccept').addEventListener('click', cerrar);
-  popup.querySelector('[data-legal-close]').addEventListener('click', cerrar);
-  document.addEventListener('keydown', onKey);
 })();
