@@ -759,3 +759,100 @@ p { color: var(--text-muted); }
   .header, .footer, .search-overlay { display: none; }
   body { padding-top: 0; }
 }
+/* ---------- Popup de Aviso Legal (global) ---------- */
+.legal-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.legal-popup.active { display: flex; }
+
+.legal-popup-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.legal-popup-content {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 44px 32px 28px;
+  max-width: 540px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  animation: legalPopupIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes legalPopupIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.legal-popup-eyebrow {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--black);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 18px;
+}
+
+.legal-popup-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.3;
+  color: var(--black);
+  margin-bottom: 14px;
+}
+
+.legal-popup-content p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.legal-popup-version {
+  font-size: 0.78rem !important;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black) !important;
+}
+
+.legal-popup-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 24px 0 16px;
+}
+.legal-popup-actions .btn {
+  flex: 1 1 auto;
+  min-width: 160px;
+}
+
+.legal-popup-note {
+  font-size: 0.72rem !important;
+  color: var(--text-muted) !important;
+  text-align: center;
+  margin: 0 !important;
+}
+
+@media (max-width: 480px) {
+  .legal-popup-content { padding: 32px 22px 22px; }
+  .legal-popup-content h3 { font-size: 1.15rem; }
+  .legal-popup-actions .btn { min-width: 100%; }
+}
