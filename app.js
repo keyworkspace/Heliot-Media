@@ -118,23 +118,25 @@
   }
 })();
 /* ============================================================
-   HELIOT MEDIA — Aviso legal (popup global)
-   Avisa a los usuarios sobre la actualización de los Términos.
-   Para re-activar el aviso: cambia TERMS_VERSION.
+   HELIOT MEDIA — Aviso previo de actualización legal (popup global)
+   Notifica con anticipación el cambio de Términos y Condiciones,
+   conforme a la cláusula 2 de los T&C vigentes.
    ============================================================ */
 (function () {
   'use strict';
 
-  var TERMS_VERSION = '3.5'; // ← Cambiar cuando actualices los T&C
-  var STORAGE_KEY = 'heliot_terms_accepted';
+  // --- Configuración del aviso ---
+  var AVISO_ID       = '2026-09-legal-v3.5'; // identificador único del aviso
+  var FECHA_CAMBIO   = '30 de septiembre de 2026'; // fecha en que entra en vigor
+  var DIAS_ANTICIPO  = '5 días hábiles'; // plazo de preaviso
+  var STORAGE_KEY    = 'heliot_legal_aviso_visto';
 
   try {
-    if (localStorage.getItem(STORAGE_KEY) === TERMS_VERSION) return;
+    if (localStorage.getItem(STORAGE_KEY) === AVISO_ID) return;
   } catch (e) {
-    // Si localStorage no está disponible, mostrar siempre
+    // Si localStorage no está disponible, se muestra siempre
   }
 
-  // Evitar duplicar si por alguna razón ya existe
   if (document.getElementById('legalPopup')) return;
 
   var popup = document.createElement('div');
@@ -146,21 +148,20 @@
   popup.innerHTML =
     '<div class="legal-popup-overlay" data-legal-close></div>' +
     '<div class="legal-popup-content">' +
-      '<span class="legal-popup-eyebrow">Aviso legal</span>' +
-      '<h3 id="legalPopupTitle">Actualización de Términos y Condiciones</h3>' +
-      '<p>Hemos actualizado nuestros Términos y Condiciones y la Política de Privacidad. ' +
-      'Te invitamos a revisarlos antes de continuar navegando por el sitio.</p>' +
-      '<p class="legal-popup-version">Versión vigente: ' + TERMS_VERSION + '</p>' +
+      '<span class="legal-popup-eyebrow">Aviso previo</span>' +
+      '<h3 id="legalPopupTitle">Actualizaremos nuestros Términos y Condiciones</h3>' +
+      '<p>Te informamos que <strong>Heliot Media actualizará sus Términos y Condiciones y su Política de Privacidad</strong> el próximo <strong>' + FECHA_CAMBIO + '</strong>.</p>' +
+      '<p>Conforme a la cláusula 2 de nuestros Términos vigentes, este aviso se emite con al menos <strong>' + DIAS_ANTICIPO + '</strong> de anticipación. Las modificaciones no afectarán los contratos ya celebrados antes de su entrada en vigor.</p>' +
+      '<p>Te recomendamos revisar los documentos actualizados a partir de la fecha indicada. El uso continuado del sitio tras la entrada en vigor constituirá la aceptación plena de las modificaciones.</p>' +
       '<div class="legal-popup-actions">' +
-        '<a href="terminos-y-condiciones-de-uso.html" class="btn btn-outline" target="_blank" rel="noopener">Leer Términos</a>' +
-        '<button type="button" class="btn btn-gold" id="legalPopupAccept">Aceptar y continuar</button>' +
+        '<a href="terminos-y-condiciones-de-uso.html" class="btn btn-outline" target="_blank" rel="noopener">Ver Términos vigentes</a>' +
+        '<button type="button" class="btn btn-gold" id="legalPopupAccept">Entendido</button>' +
       '</div>' +
-      '<p class="legal-popup-note">Al continuar navegando aceptas los Términos y Condiciones vigentes.</p>' +
+      '<p class="legal-popup-note">Este aviso no modifica los Términos vigentes. Solo notifica su próxima actualización.</p>' +
     '</div>';
 
   document.body.appendChild(popup);
 
-  // Bloquear scroll del body mientras está abierto
   var prevOverflow = document.body.style.overflow;
   document.body.style.overflow = 'hidden';
 
@@ -170,7 +171,7 @@
 
   function cerrar() {
     try {
-      localStorage.setItem(STORAGE_KEY, TERMS_VERSION);
+      localStorage.setItem(STORAGE_KEY, AVISO_ID);
     } catch (e) { /* ignorar */ }
     popup.classList.remove('active');
     document.body.style.overflow = prevOverflow || '';
