@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reservar sesión · Heliot Media</title>
-<meta name="description" content="Reserva tu sesión fotográfica con Heliot Media. Elige tu paquete, completa tus datos y paga con Wompi.">
+<meta name="description" content="Solicita tu sesión fotográfica con Heliot Media. Elige tu paquete, completa tus datos y coordinamos el pago contigo.">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://use.typekit.net/yyi3lii.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -103,17 +103,19 @@
 <section class="page-hero">
   <div class="container">
     <span class="eyebrow">Reservar</span>
-    <h1 class="display">Contrata tu sesión</h1>
-    <p>Elige tu paquete, completa tus datos y paga seguro con Wompi.</p>
+    <h1 class="display">Solicita tu sesión</h1>
+    <!-- CAMBIO: se quitó la mención a Wompi -->
+    <p>Elige tu paquete, completa tus datos y coordinamos el pago y la sesión contigo.</p>
   </div>
 </section>
 
 <section class="contratar-wrap">
   <div class="container">
+
+    <!-- CAMBIO: solo 2 pasos ahora -->
     <div class="steps">
       <div class="step active" id="step1"><span class="num">1</span><span class="label">Elegir paquete</span></div>
       <div class="step" id="step2"><span class="num">2</span><span class="label">Tus datos</span></div>
-      <div class="step" id="step3"><span class="num">3</span><span class="label">Pagar</span></div>
     </div>
 
     <div id="paquetes-section">
@@ -255,6 +257,20 @@
               <label class="form-label" for="horaCliente">Hora preferida</label>
               <input class="form-input" type="time" id="horaCliente" name="Hora preferida">
             </div>
+
+            <!-- CAMBIO: nuevo campo de método de pago preferido -->
+            <div class="form-group full">
+              <label class="form-label" for="metodoPagoCliente">Método de pago preferido</label>
+              <select class="form-input form-select" id="metodoPagoCliente" name="Método de pago preferido">
+                <option value="">— Selecciona una opción —</option>
+                <option value="Efectivo en el estudio">Efectivo en el estudio</option>
+                <option value="Transferencia bancaria">Transferencia bancaria</option>
+                <option value="Wompi (enlace online)">Wompi (enlace online)</option>
+                <option value="Otro / A convenir">Otro / A convenir</option>
+              </select>
+              <p class="form-hint">Solo como preferencia. Coordinaremos el pago contigo al confirmar la reserva.</p>
+            </div>
+
             <div class="form-group full">
               <label class="form-label" for="comentariosCliente">Comentarios adicionales</label>
               <textarea class="form-input form-textarea" id="comentariosCliente" name="Comentarios" rows="3" placeholder="Cuéntanos cualquier detalle importante"></textarea>
@@ -265,15 +281,20 @@
           <input type="hidden" id="hiddenPrecio" name="Precio">
           <input type="hidden" id="hiddenTipo" name="Tipo">
 
+          <!-- CAMBIO: autorespuesta al cliente + asunto personalizado -->
+          <input type="hidden" name="_subject" value="Nueva solicitud de reserva — Heliot Media">
+          <input type="hidden" name="_autoresponse" value="¡Gracias por tu solicitud! Hemos recibido tus datos y te contactaremos en las próximas 24-48 horas para coordinar el pago y tu sesión. — Heliot Media">
+
           <div class="terms">
             <input type="checkbox" id="terminosCheck" required>
             <label for="terminosCheck">
-              He leído y acepto los <a href="terminos-y-condiciones-de-uso.html" target="_blank">Términos y Condiciones</a> y la <a href="politica-de-privacidad.html" target="_blank">Política de Privacidad</a>. El pago confirma mi reserva.
+              He leído y acepto los <a href="terminos-y-condiciones-de-uso.html" target="_blank">Términos y Condiciones</a> y la <a href="politica-de-privacidad.html" target="_blank">Política de Privacidad</a>. Solicito la reserva y entiendo que Heliot Media me contactará para coordinar el pago.
             </label>
           </div>
 
           <div class="text-center">
-            <button type="submit" class="btn btn-gold" id="btnEnviar" style="min-width: 240px;">🔒 Pagar ahora</button>
+            <!-- CAMBIO: texto del botón -->
+            <button type="submit" class="btn btn-gold" id="btnEnviar" style="min-width: 280px;">✓ Enviar solicitud de reserva</button>
           </div>
         </form>
       </div>
@@ -285,13 +306,23 @@
   </div>
 </section>
 
-<!-- POPUP ERROR (único popup restante) -->
+<!-- POPUP ERROR -->
 <div class="popup" id="popup-error">
   <div class="popup-content">
     <div class="icon">⚠</div>
     <h3>Algo salió mal</h3>
     <p id="error-mensaje">Error desconocido.</p>
     <button class="btn btn-primary" id="btnCerrarError">Entendido</button>
+  </div>
+</div>
+
+<!-- CAMBIO: nuevo popup de éxito -->
+<div class="popup" id="popup-exito">
+  <div class="popup-content">
+    <div class="icon">✅</div>
+    <h3>¡Solicitud recibida!</h3>
+    <p>Te contactaremos en las próximas <strong>24-48 horas</strong> para coordinar el pago y tu sesión. Revisa tu correo, te enviamos una confirmación.</p>
+    <button class="btn btn-gold" id="btnCerrarExito">Entendido</button>
   </div>
 </div>
 
@@ -355,7 +386,8 @@
 </div>
 
 <script src="app.js" defer></script>
-<script src="pagos.js" defer></script>
+<!-- CAMBIO: pagos.js eliminado -->
+
 <script>
 (function(){
   'use strict';
@@ -370,7 +402,18 @@
   var seccionDatos = document.getElementById('datos-section');
   var resumenPaquete = document.getElementById('resumenPaquete');
   var popupError = document.getElementById('popup-error');
+  var popupExito = document.getElementById('popup-exito');
   var errorMensaje = document.getElementById('error-mensaje');
+
+  // CAMBIO: bloqueo de fechas pasadas en el propio date picker
+  var inputFecha = document.getElementById('fechaCliente');
+  if (inputFecha) {
+    var hoy = new Date();
+    var yyyy = hoy.getFullYear();
+    var mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    var dd = String(hoy.getDate()).padStart(2, '0');
+    inputFecha.min = yyyy + '-' + mm + '-' + dd;
+  }
 
   // Tabs
   document.querySelectorAll('.tab-btn').forEach(function(btn){
@@ -451,6 +494,21 @@
     popupError.classList.remove('active');
   });
 
+  // CAMBIO: cerrar popup de éxito + resetear formulario
+  document.getElementById('btnCerrarExito').addEventListener('click', function(){
+    popupExito.classList.remove('active');
+    document.getElementById('contratar-formulario').reset();
+    // Volver al paso 1
+    seccionPaquetes.classList.remove('hidden');
+    seccionDatos.classList.add('hidden');
+    document.getElementById('step1').className = 'step active';
+    document.getElementById('step2').className = 'step';
+    document.querySelectorAll('.pk').forEach(p => p.classList.remove('selected'));
+    paquete = null;
+    btnContinuar.disabled = true;
+    resumenPaquete.textContent = 'Sin selección';
+  });
+
   document.getElementById('contratar-formulario').addEventListener('submit', function(e){
     e.preventDefault();
 
@@ -462,6 +520,7 @@
     var telefono = document.getElementById('telefonoCliente').value.trim();
     var fecha = document.getElementById('fechaCliente').value;
     var hora = document.getElementById('horaCliente').value;
+    var metodoPago = document.getElementById('metodoPagoCliente').value;
     var comentarios = document.getElementById('comentariosCliente').value.trim();
     var terminos = document.getElementById('terminosCheck').checked;
 
@@ -475,21 +534,6 @@
     btnEnviar.disabled = true;
     btnEnviar.textContent = 'Enviando...';
 
-    // Guardar reserva localmente antes de enviar
-    var reserva = {
-      paqueteId: paquete.id,
-      paqueteNombre: paquete.nombre,
-      precio: paquete.precioDisplay,
-      tipo: paquete.tipo,
-      nombre: nombre,
-      email: email,
-      telefono: telefono,
-      fecha: fecha,
-      hora: hora,
-      comentarios: comentarios
-    };
-    window.HeliotPagos.guardarReserva(reserva);
-
     var data = {};
     new FormData(this).forEach(function(v, k){ data[k] = v; });
 
@@ -501,7 +545,10 @@
     .then(function(r){ return r.json(); })
     .then(function(res){
       if (res.success === 'true' || res.success === true || res.message === 'OK') {
-        window.location.href = 'verificacion.html';
+        // CAMBIO: en vez de redirigir a verificacion.html, mostramos popup de éxito
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = '✓ Enviar solicitud de reserva';
+        popupExito.classList.add('active');
       } else {
         throw new Error('Respuesta inválida del servidor');
       }
@@ -509,8 +556,8 @@
     .catch(function(){
       mostrarError('No se pudo enviar. Intenta de nuevo o escríbenos a contact.heliot@gmail.com');
       btnEnviar.disabled = false;
-      btnEnviar.textContent = '🔒 Pagar ahora';
-      window.HeliotPagos.limpiarReserva();
+      btnEnviar.textContent = '✓ Enviar solicitud de reserva';
+      // CAMBIO: se eliminó window.HeliotPagos.limpiarReserva() (ya no aplica)
     });
   });
 })();
