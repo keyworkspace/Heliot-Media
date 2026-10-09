@@ -1,0 +1,201 @@
+/* ============================================================
+   Captación de Gastos · Heliot Media
+   CSS aislado — todas las clases usan el prefijo .cg-
+   No modifica estilos globales del repositorio.
+   ============================================================ */
+
+.cg-body {
+  font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: #1e293b;
+}
+
+.cg-body *,
+.cg-body *::before,
+.cg-body *::after {
+  box-sizing: border-box;
+}
+
+.cg-container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 720px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.cg-header {
+  background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+  color: #ffffff;
+  padding: 40px 40px 32px;
+}
+
+.cg-brand {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+
+.cg-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.cg-intro {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.92;
+  margin: 0;
+}
+
+.cg-form {
+  padding: 36px 40px 40px;
+}
+
+.cg-field {
+  margin-bottom: 22px;
+}
+
+.cg-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.cg-req {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.cg-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #1e293b;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.cg-input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(14,165,233,0.12);
+}
+
+.cg-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.cg-file {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.cg-file::file-selector-button {
+  background: #0ea5e9;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.cg-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.cg-radio-group {
+  display: flex;
+  gap: 20px;
+  padding-top: 4px;
+}
+
+.cg-radio {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.cg-radio input[type="radio"] {
+  accent-color: #0ea5e9;
+  width: 16px;
+  height: 16px;
+}
+
+.cg-hint {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.cg-button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  margin-top: 8px;
+  font-family: inherit;
+}
+
+.cg-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(14,165,233,0.4);
+}
+
+.cg-button:active {
+  transform: translateY(0);
+}
+
+.cg-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #94a3b8;
+  padding: 0 40px 30px;
+}
+
+@media (max-width: 560px) {
+  .cg-row { grid-template-columns: 1fr; }
+  .cg-header { padding: 30px 24px 24px; }
+  .cg-form { padding: 24px; }
+  .cg-title { font-size: 22px; }
+  .cg-footer { padding: 0 24px 24px; }
+}
