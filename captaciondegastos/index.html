@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Captación de Gastos · Heliot Media</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="cg-body">
+
+<div class="cg-container">
+  <div class="cg-header">
+    <div class="cg-brand">Heliot Media</div>
+    <h1 class="cg-title">Captación de Gastos</h1>
+    <p class="cg-intro">Registra aquí cualquier gasto que no hayas ingresado en su momento. Adjunta el respaldo correspondiente. Administración lo revisará y se contactará contigo si falta información.</p>
+  </div>
+
+  <form class="cg-form" action="https://formsubmit.co/TU_CORREO@heliotmedia.com" method="POST" enctype="multipart/form-data">
+
+    <input type="hidden" name="_subject" value="Nuevo gasto registrado · Captación de Gastos">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <!-- <input type="hidden" name="_next" value="https://heliotmedia.com/gracias"> -->
+
+    <div class="cg-field">
+      <label class="cg-label">Nombre completo <span class="cg-req">*</span></label>
+      <input class="cg-input" type="text" name="Nombre completo" required>
+    </div>
+
+    <div class="cg-field">
+      <label class="cg-label">Correo electrónico <span class="cg-req">*</span></label>
+      <input class="cg-input" type="email" name="Correo electrónico" required>
+    </div>
+
+    <div class="cg-field">
+      <label class="cg-label">Área o equipo <span class="cg-req">*</span></label>
+      <select class="cg-input" name="Área o equipo" required>
+        <option value="">Selecciona una opción</option>
+        <option>Producción</option>
+        <option>Diseño</option>
+        <option>Comercial</option>
+        <option>Administración</option>
+        <option>Dirección</option>
+        <option>Otro</option>
+      </select>
+    </div>
+
+    <div class="cg-row">
+      <div class="cg-field">
+        <label class="cg-label">Fecha del gasto <span class="cg-req">*</span></label>
+        <input class="cg-input" type="date" name="Fecha del gasto" required>
+      </div>
+      <div class="cg-field">
+        <label class="cg-label">Monto <span class="cg-req">*</span></label>
+        <input class="cg-input" type="number" name="Monto" step="0.01" min="0" placeholder="0.00" required>
+      </div>
+    </div>
+
+    <div class="cg-row">
+      <div class="cg-field">
+        <label class="cg-label">Moneda <span class="cg-req">*</span></label>
+        <select class="cg-input" name="Moneda" required>
+          <option>CLP</option>
+          <option>USD</option>
+          <option>ARS</option>
+          <option>EUR</option>
+          <option>Otra</option>
+        </select>
+      </div>
+      <div class="cg-field">
+        <label class="cg-label">Categoría <span class="cg-req">*</span></label>
+        <select class="cg-input" name="Categoría" required>
+          <option value="">Selecciona</option>
+          <option>Alimentación</option>
+          <option>Transporte</option>
+          <option>Insumos</option>
+          <option>Servicios</option>
+          <option>Equipos</option>
+          <option>Otros</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cg-field">
+      <label class="cg-label">Proveedor o comercio</label>
+      <input class="cg-input" type="text" name="Proveedor">
+    </div>
+
+    <div class="cg-field">
+      <label class="cg-label">Descripción o motivo del gasto <span class="cg-req">*</span></label>
+      <textarea class="cg-input cg-textarea" name="Descripción" required placeholder="Explica brevemente en qué consistió el gasto..."></textarea>
+    </div>
+
+    <div class="cg-row">
+      <div class="cg-field">
+        <label class="cg-label">N° de boleta o factura</label>
+        <input class="cg-input" type="text" name="N° documento">
+      </div>
+      <div class="cg-field">
+        <label class="cg-label">Tipo de documento</label>
+        <select class="cg-input" name="Tipo de documento">
+          <option>Boleta</option>
+          <option>Factura</option>
+          <option>Recibo</option>
+          <option>Sin documento</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="cg-field">
+      <label class="cg-label">Adjuntar respaldo</label>
+      <input class="cg-file" type="file" name="Respaldo" accept=".jpg,.jpeg,.png,.pdf">
+      <div class="cg-hint">Formatos aceptados: JPG, PNG, PDF. Máx. 10 MB.</div>
+    </div>
+
+    <div class="cg-field">
+      <label class="cg-label">¿Requiere reembolso? <span class="cg-req">*</span></label>
+      <div class="cg-radio-group">
+        <label class="cg-radio"><input type="radio" name="Reembolso" value="Sí" required> Sí</label>
+        <label class="cg-radio"><input type="radio" name="Reembolso" value="No"> No</label>
+      </div>
+    </div>
+
+    <div class="cg-field">
+      <label class="cg-label">Observaciones adicionales</label>
+      <textarea class="cg-input cg-textarea" name="Observaciones" placeholder="Opcional"></textarea>
+    </div>
+
+    <button class="cg-button" type="submit">Enviar gasto</button>
+  </form>
+
+  <div class="cg-footer">
+    Tus datos serán enviados directamente al correo de administración de Heliot Media.
+  </div>
+</div>
+
+</body>
+</html>
