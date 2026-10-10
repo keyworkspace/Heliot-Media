@@ -30,7 +30,6 @@
           <label class="cg-label" for="cgCodigo">Código de colaborador <span class="cg-req">*</span></label>
           <input class="cg-input cg-input-lg" type="text" id="cgCodigo"
                  placeholder="2026-HELIOT-0001" autocomplete="off" required>
-          <div class="cg-hint">Formato válido: 2026-HELIOT-0001 al 2026-HELIOT-0006</div>
         </div>
 
         <div class="cg-collab-info" id="cgCollabInfo" hidden>
@@ -64,6 +63,11 @@
 
       <div class="cg-grid" id="cgGrid">
         <!-- tarjetas de gastos + tarjeta "+ Añadir gasto" -->
+      </div>
+
+      <div class="cg-dash-total" id="cgDashTotal" hidden>
+        <span>Gastos generales</span>
+        <strong id="cgDashTotalValue">$0.00</strong>
       </div>
 
       <div class="cg-dash-actions">
