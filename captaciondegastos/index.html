@@ -10,73 +10,65 @@
 
 <div class="cg-container">
 
-  <div class="cg-header">
+  <header class="cg-header">
     <div class="cg-brand">Heliot Media</div>
     <h1 class="cg-title">Captación de Gastos</h1>
     <p class="cg-intro">Registra aquí uno o varios gastos que no hayas ingresado en su momento. Todos los montos se registran en dólares (USD). Adjunta el recibo cuando corresponda.</p>
-  </div>
+  </header>
 
   <form class="cg-form" id="cgForm"
-        action="https://formsubmit.co/TU_CORREO@heliotmedia.com"
+        action="https://formsubmit.co/alexhrnndz32@gmail.com"
         method="POST" enctype="multipart/form-data">
 
-    <!-- Config FormSubmit -->
     <input type="hidden" name="_subject" value="Nuevo gasto registrado · Captación de Gastos">
     <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_captcha" value="false">
-    <!-- <input type="hidden" name="_next" value="https://heliotmedia.com/gracias"> -->
-
-    <!-- Moneda fija -->
     <input type="hidden" name="Moneda" value="USD">
 
     <!-- ===================== COLABORADOR ===================== -->
-    <div class="cg-collab">
-      <div class="cg-field">
-        <label class="cg-label" for="cgCodigo">Código de colaborador <span class="cg-req">*</span></label>
-        <input class="cg-input" type="text" id="cgCodigo" name="Código de colaborador"
-               placeholder="2026-HELIOT-0001" autocomplete="off" required>
-        <div class="cg-hint">Formato válido: 2026-HELIOT-0001 al 2026-HELIOT-0006</div>
-      </div>
+    <section class="cg-section">
+      <h2 class="cg-section-title">Datos del colaborador</h2>
 
-      <div class="cg-collab-info" id="cgCollabInfo" hidden>
-        <div class="cg-collab-avatar" id="cgCollabAvatar">—</div>
-        <div>
-          <div class="cg-collab-name" id="cgCollabName">—</div>
-          <div class="cg-collab-role" id="cgCollabRole">—</div>
+      <div class="cg-collab">
+        <div class="cg-field">
+          <label class="cg-label" for="cgCodigo">Código de colaborador <span class="cg-req">*</span></label>
+          <input class="cg-input" type="text" id="cgCodigo" name="Código de colaborador"
+                 placeholder="2026-HELIOT-0001" autocomplete="off" required>
+          <div class="cg-hint">Formato válido: 2026-HELIOT-0001 al 2026-HELIOT-0006</div>
+        </div>
+
+        <div class="cg-collab-info" id="cgCollabInfo" hidden>
+          <div class="cg-collab-avatar" id="cgCollabAvatar">—</div>
+          <div class="cg-collab-text">
+            <div class="cg-collab-name" id="cgCollabName">—</div>
+            <div class="cg-collab-role" id="cgCollabRole">—</div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- ===================== TABLA DE GASTOS ===================== -->
-    <div class="cg-table-label">Detalle de gastos</div>
+    <!-- ===================== GASTOS ===================== -->
+    <section class="cg-section">
+      <div class="cg-section-head">
+        <h2 class="cg-section-title">Detalle de gastos</h2>
+        <span class="cg-section-note">Agrega un gasto por tarjeta</span>
+      </div>
 
-    <div class="cg-table-wrap">
-      <table class="cg-table" id="cgTabla">
-        <thead>
-          <tr>
-            <th class="cg-th-num">N°</th>
-            <th>Fecha del gasto</th>
-            <th>Categoría</th>
-            <th>Proveedor / Lugar</th>
-            <th>Descripción o motivo</th>
-            <th class="cg-th-check">Posee recibo</th>
-            <th>Recibo (JPG/PNG/PDF)</th>
-            <th>Comentarios adicionales</th>
-            <th class="cg-th-del"></th>
-          </tr>
-        </thead>
-        <tbody id="cgTbody"><!-- filas dinámicas --></tbody>
-      </table>
-    </div>
+      <div class="cg-gastos" id="cgGastos">
+        <!-- tarjetas dinámicas -->
+      </div>
 
-    <button type="button" class="cg-add-btn" id="cgAddRow">+ Agregar otro gasto</button>
+      <button type="button" class="cg-add-btn" id="cgAddRow">
+        <span class="cg-add-icon">+</span> Agregar otro gasto
+      </button>
+    </section>
 
     <button class="cg-button" type="submit">Enviar gastos</button>
   </form>
 
-  <div class="cg-footer">
+  <footer class="cg-footer">
     Tus datos serán enviados directamente al correo de administración de Heliot Media.
-  </div>
+  </footer>
 
 </div>
 
