@@ -13,26 +13,22 @@
   <header class="cg-header">
     <div class="cg-brand">Heliot Media</div>
     <h1 class="cg-title">Captación de Gastos</h1>
-    <p class="cg-intro">Registra aquí uno o varios gastos que no hayas ingresado en su momento. Todos los montos se registran en dólares (USD). Adjunta el recibo cuando corresponda.</p>
+    <p class="cg-intro">Registra cada gasto con el asistente paso a paso. Puedes añadir tantos como necesites antes de enviarlos.</p>
   </header>
 
-  <form class="cg-form" id="cgForm"
-        action="https://formsubmit.co/alexhrnndz32@gmail.com"
-        method="POST" enctype="multipart/form-data">
+  <main class="cg-main">
 
-    <input type="hidden" name="_subject" value="Nuevo gasto registrado · Captación de Gastos">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="Moneda" value="USD">
+    <!-- ============================================================
+         VISTA 1 · CÓDIGO DE COLABORADOR
+         ============================================================ -->
+    <section class="cg-view" id="cgViewColab">
+      <div class="cg-view-inner cg-view-narrow">
+        <h2 class="cg-view-title">Identifícate</h2>
+        <p class="cg-view-sub">Ingresa tu código de colaborador para comenzar.</p>
 
-    <!-- ===================== COLABORADOR ===================== -->
-    <section class="cg-section">
-      <h2 class="cg-section-title">Datos del colaborador</h2>
-
-      <div class="cg-collab">
         <div class="cg-field">
           <label class="cg-label" for="cgCodigo">Código de colaborador <span class="cg-req">*</span></label>
-          <input class="cg-input" type="text" id="cgCodigo" name="Código de colaborador"
+          <input class="cg-input cg-input-lg" type="text" id="cgCodigo"
                  placeholder="2026-HELIOT-0001" autocomplete="off" required>
           <div class="cg-hint">Formato válido: 2026-HELIOT-0001 al 2026-HELIOT-0006</div>
         </div>
@@ -44,33 +40,78 @@
             <div class="cg-collab-role" id="cgCollabRole">—</div>
           </div>
         </div>
+
+        <button type="button" class="cg-button" id="cgColabContinuar" disabled>
+          Continuar
+        </button>
       </div>
     </section>
 
-    <!-- ===================== GASTOS ===================== -->
-    <section class="cg-section">
-      <div class="cg-section-head">
-        <h2 class="cg-section-title">Detalle de gastos</h2>
-        <span class="cg-section-note">Agrega un gasto por tarjeta</span>
+    <!-- ============================================================
+         VISTA 2 · DASHBOARD
+         ============================================================ -->
+    <section class="cg-view" id="cgViewDash" hidden>
+      <div class="cg-dash-top">
+        <div class="cg-dash-user">
+          <div class="cg-collab-avatar" id="cgDashAvatar">—</div>
+          <div>
+            <div class="cg-dash-name" id="cgDashName">—</div>
+            <div class="cg-dash-role" id="cgDashRole">—</div>
+          </div>
+        </div>
+        <div class="cg-dash-count" id="cgDashCount">0 gastos</div>
       </div>
 
-      <div class="cg-gastos" id="cgGastos">
-        <!-- tarjetas dinámicas -->
+      <div class="cg-grid" id="cgGrid">
+        <!-- tarjetas de gastos + tarjeta "+ Añadir gasto" -->
       </div>
 
-      <button type="button" class="cg-add-btn" id="cgAddRow">
-        <span class="cg-add-icon">+</span> Agregar otro gasto
-      </button>
+      <div class="cg-dash-actions">
+        <button type="button" class="cg-button cg-button-send" id="cgEnviar">
+          Enviar gastos a administración
+        </button>
+        <button type="button" class="cg-link-btn" id="cgCambiarColab">
+          Cambiar de colaborador
+        </button>
+      </div>
     </section>
 
-    <button class="cg-button" type="submit">Enviar gastos</button>
-  </form>
+    <!-- ============================================================
+         VISTA 3 · WIZARD (paso a paso)
+         ============================================================ -->
+    <section class="cg-view" id="cgViewWizard" hidden>
+      <div class="cg-wizard">
+        <div class="cg-wizard-top">
+          <button type="button" class="cg-wizard-close" id="cgWizardCancel" title="Cancelar">×</button>
+          <div class="cg-progress">
+            <div class="cg-progress-bar"><div class="cg-progress-fill" id="cgProgressFill"></div></div>
+            <div class="cg-progress-text" id="cgProgressText">Paso 1 de 7</div>
+          </div>
+        </div>
+
+        <div class="cg-wizard-body" id="cgWizardBody">
+          <!-- contenido dinámico -->
+        </div>
+
+        <div class="cg-wizard-nav">
+          <button type="button" class="cg-btn-back" id="cgWizardBack">← Atrás</button>
+          <button type="button" class="cg-btn-next" id="cgWizardNext">Siguiente →</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <footer class="cg-footer">
     Tus datos serán enviados directamente al correo de administración de Heliot Media.
   </footer>
 
 </div>
+
+<!-- Formulario oculto que se construye al enviar -->
+<form id="cgFinalForm"
+      action="https://formsubmit.co/alexhrnndz32@gmail.com"
+      method="POST" enctype="multipart/form-data" hidden></form>
 
 <script src="app.js"></script>
 </body>
