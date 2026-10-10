@@ -1,12 +1,11 @@
 /* ============================================================
    Captación de Gastos · Heliot Media
-   Lógica del formulario (validación de código + tabla dinámica)
+   Lógica del formulario
    ============================================================ */
 
 (function () {
   'use strict';
 
-  /* -------- Colaboradores -------- */
   const COLABORADORES = {
     '2026-HELIOT-0001': { nombre: 'Alexander Hernández', rol: 'Director General · Administración', iniciales: 'AH' },
     '2026-HELIOT-0002': { nombre: 'Odalys Amaya',        rol: 'Fotografía Principal · Dirección Creativa', iniciales: 'OA' },
@@ -18,13 +17,12 @@
 
   const CATEGORIAS = ['Alimentación', 'Transporte', 'Insumos', 'Servicios', 'Equipos', 'Otros'];
 
-  /* -------- Referencias -------- */
   const codigoInput = document.getElementById('cgCodigo');
   const collabInfo  = document.getElementById('cgCollabInfo');
   const collabName  = document.getElementById('cgCollabName');
   const collabRole  = document.getElementById('cgCollabRole');
   const collabAv    = document.getElementById('cgCollabAvatar');
-  const tbody       = document.getElementById('cgTbody');
+  const contenedor  = document.getElementById('cgGastos');
   const addBtn      = document.getElementById('cgAddRow');
 
   /* -------- Validación del código -------- */
@@ -34,12 +32,12 @@
 
     if (col) {
       codigoInput.classList.remove('cg-input-error');
+      codigoInput.setCustomValidity('');
       collabInfo.hidden = false;
       collabName.textContent = col.nombre;
       collabRole.textContent = col.rol;
       collabAv.textContent   = col.iniciales;
 
-      // Campo oculto con el nombre, para que llegue al correo
       let hidden = document.getElementById('cgNombreHidden');
       if (!hidden) {
         hidden = document.createElement('input');
@@ -52,116 +50,120 @@
     } else {
       collabInfo.hidden = true;
       codigoInput.classList.add('cg-input-error');
+      if (val) {
+        codigoInput.setCustomValidity('El código debe estar entre 2026-HELIOT-0001 y 2026-HELIOT-0006');
+      } else {
+        codigoInput.setCustomValidity('');
+      }
       const hidden = document.getElementById('cgNombreHidden');
       if (hidden) hidden.value = '';
     }
   }
 
   codigoInput.addEventListener('input', () => {
-    // Autocompleta mayúsculas y guiones cómodamente
     codigoInput.value = codigoInput.value.toUpperCase();
     validarCodigo();
   });
+  codigoInput.addEventListener('blur', validarCodigo);
 
-  codigoInput.addEventListener('blur', () => {
-    if (codigoInput.value.trim() && !COLABORADORES[codigoInput.value.trim().toUpperCase()]) {
-      codigoInput.setCustomValidity('El código debe estar entre 2026-HELIOT-0001 y 2026-HELIOT-0006');
-    } else {
-      codigoInput.setCustomValidity('');
-    }
-  });
+  /* -------- Construcción de una tarjeta de gasto -------- */
+  function crearGasto() {
+    const card = document.createElement('article');
+    card.className = 'cg-gasto';
 
-  /* -------- Construcción de una fila de gasto -------- */
-  function crearFila() {
-    const tr = document.createElement('tr');
-    tr.className = 'cg-row-gasto';
+    card.innerHTML = `
+      <div class="cg-gasto-head">
+        <span class="cg-gasto-badge"><span class="cg-badge-dot"></span>Gasto <span class="cg-num"></span></span>
+        <button type="button" class="cg-del-btn" title="Eliminar gasto">×</button>
+      </div>
 
-    tr.innerHTML = `
-      <td class="cg-cell-num"><span class="cg-num"></span></td>
+      <div class="cg-gasto-grid">
+        <div class="cg-field">
+          <label class="cg-label">Fecha del gasto <span class="cg-req">*</span></label>
+          <input class="cg-input" type="date" data-field="fecha" required>
+        </div>
 
-      <td>
-        <input class="cg-input" type="date" data-field="fecha" required>
-      </td>
+        <div class="cg-field">
+          <label class="cg-label">Categoría <span class="cg-req">*</span></label>
+          <select class="cg-input" data-field="categoria" required>
+            <option value="">Selecciona</option>
+            ${CATEGORIAS.map(c => `<option>${c}</option>`).join('')}
+          </select>
+        </div>
 
-      <td>
-        <select class="cg-input" data-field="categoria" required>
-          <option value="">Selecciona</option>
-          ${CATEGORIAS.map(c => `<option>${c}</option>`).join('')}
-        </select>
-      </td>
+        <div class="cg-field">
+          <label class="cg-label">Proveedor o lugar de compra</label>
+          <input class="cg-input" type="text" data-field="proveedor" placeholder="Ej: Farmacia San Pablo">
+        </div>
 
-      <td>
-        <input class="cg-input" type="text" data-field="proveedor" placeholder="Ej: Farmacia San Pablo">
-      </td>
+        <div class="cg-field">
+          <label class="cg-label">Descripción o motivo <span class="cg-req">*</span></label>
+          <input class="cg-input" type="text" data-field="descripcion" placeholder="Motivo del gasto" required>
+        </div>
 
-      <td>
-        <input class="cg-input" type="text" data-field="descripcion" placeholder="Motivo del gasto" required>
-      </td>
+        <div class="cg-field cg-check-field">
+          <label class="cg-check-label">
+            <input type="checkbox" data-field="posee-recibo">
+            <span>Posee recibo o factura</span>
+          </label>
+        </div>
 
-      <td class="cg-check-cell">
-        <input type="checkbox" data-field="posee-recibo">
-      </td>
+        <div class="cg-field">
+          <label class="cg-label">Adjuntar recibo</label>
+          <input class="cg-file" type="file" data-field="recibo"
+                 accept=".jpg,.jpeg,.png,.pdf" disabled>
+        </div>
 
-      <td>
-        <input class="cg-file" type="file" data-field="recibo"
-               accept=".jpg,.jpeg,.png,.pdf" disabled>
-      </td>
-
-      <td>
-        <input class="cg-input" type="text" data-field="comentarios" placeholder="Opcional">
-      </td>
-
-      <td>
-        <button type="button" class="cg-del-btn" title="Eliminar fila">×</button>
-      </td>
+        <div class="cg-field cg-field-full">
+          <label class="cg-label">Comentarios adicionales</label>
+          <input class="cg-input" type="text" data-field="comentarios" placeholder="Opcional">
+        </div>
+      </div>
     `;
 
-    // Checkbox activa/desactiva el file input
-    const check = tr.querySelector('[data-field="posee-recibo"]');
-    const file  = tr.querySelector('[data-field="recibo"]');
+    const check = card.querySelector('[data-field="posee-recibo"]');
+    const file  = card.querySelector('[data-field="recibo"]');
+
     check.addEventListener('change', () => {
       file.disabled = !check.checked;
       if (!check.checked) file.value = '';
     });
 
-    // Botón eliminar
-    tr.querySelector('.cg-del-btn').addEventListener('click', () => {
-      if (tbody.querySelectorAll('.cg-row-gasto').length <= 1) return;
-      tr.remove();
+    card.querySelector('.cg-del-btn').addEventListener('click', () => {
+      if (contenedor.querySelectorAll('.cg-gasto').length <= 1) return;
+      card.remove();
       renumerar();
     });
 
-    return tr;
+    return card;
   }
 
-  /* -------- Renumerar filas y actualizar nombres de campos -------- */
+  /* -------- Renumerar tarjetas y campos -------- */
   function renumerar() {
-    const filas = tbody.querySelectorAll('.cg-row-gasto');
-    const total = filas.length;
+    const cards = contenedor.querySelectorAll('.cg-gasto');
+    const total = cards.length;
 
-    filas.forEach((tr, i) => {
+    cards.forEach((card, i) => {
       const n = i + 1;
-      tr.querySelector('.cg-num').textContent = n;
+      card.querySelector('.cg-num').textContent = n;
 
-      tr.querySelectorAll('[data-field]').forEach(el => {
+      card.querySelectorAll('[data-field]').forEach(el => {
         const field = el.getAttribute('data-field');
         const label = field.charAt(0).toUpperCase() + field.slice(1);
         el.name = `Gasto ${n} - ${label}`;
       });
 
-      // El primero no se puede borrar si sólo hay uno
-      tr.querySelector('.cg-del-btn').disabled = (total <= 1);
+      card.querySelector('.cg-del-btn').disabled = (total <= 1);
     });
   }
 
-  /* -------- Agregar fila -------- */
-  function agregarFila() {
-    tbody.appendChild(crearFila());
+  function agregarGasto() {
+    contenedor.appendChild(crearGasto());
     renumerar();
   }
 
-  addBtn.addEventListener('click', agregarFila);
+  addBtn.addEventListener('click', agregarGasto);
 
   /* -------- Inicio -------- */
-  agregarFila();
+  agregarGasto();
 })();
