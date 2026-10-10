@@ -259,6 +259,22 @@
   margin: 2px 0 0;
 }
 
+.cg-card-subtotal {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+  margin: 2px 0 2px;
+}
+
+.cg-card-subtotal small {
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  margin-left: 6px;
+  letter-spacing: 0;
+}
+
 .cg-card-meta {
   font-size: 12.5px;
   color: #64748b;
@@ -290,24 +306,17 @@
   gap: 5px;
 }
 
-.cg-card-tag.tiene {
-  color: #047857;
-  background: #d1fae5;
-}
+.cg-card-tag.tiene { color: #047857; background: #d1fae5; }
+.cg-card-tag.sin   { color: #b45309; background: #fef3c7; }
 
-.cg-card-tag.sin {
-  color: #b45309;
-  background: #fef3c7;
-}
+.cg-card-actions { display: flex; gap: 6px; }
 
+.cg-card-edit,
 .cg-card-del {
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  border: 1.5px solid #fecaca;
-  background: #fef2f2;
-  color: #ef4444;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -318,6 +327,19 @@
   line-height: 1;
 }
 
+.cg-card-edit {
+  border: 1.5px solid #bfdbfe;
+  background: #eff6ff;
+  color: #2563eb;
+}
+.cg-card-edit:hover { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+.cg-card-del {
+  border: 1.5px solid #fecaca;
+  background: #fef2f2;
+  color: #ef4444;
+  font-size: 16px;
+}
 .cg-card-del:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
 
 /* Tarjeta "+ Añadir gasto" */
@@ -363,12 +385,41 @@
 
 .cg-card-add-label { font-size: 14px; font-weight: 700; }
 
+/* Total general */
+.cg-dash-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 100%);
+  border: 1.5px solid #c7d2fe;
+  border-radius: 14px;
+  padding: 18px 24px;
+  margin-top: 26px;
+  animation: cgFadeIn .25s ease;
+}
+
+.cg-dash-total span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3730a3;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.cg-dash-total strong {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
 .cg-dash-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  margin-top: 30px;
+  margin-top: 26px;
 }
 
 .cg-link-btn {
@@ -406,10 +457,7 @@
   box-shadow: 0 12px 28px rgba(14,165,233,0.35);
 }
 
-.cg-button:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
+.cg-button:disabled { opacity: 0.45; cursor: not-allowed; }
 
 .cg-button-send { max-width: 420px; margin: 0 auto; }
 
@@ -417,7 +465,7 @@
 .cg-wizard {
   display: flex;
   flex-direction: column;
-  min-height: 420px;
+  min-height: 460px;
 }
 
 .cg-wizard-top { position: relative; padding-top: 6px; }
@@ -504,7 +552,20 @@
 
 .cg-wizard-input-wrap { max-width: 480px; }
 
-/* Opciones grandes (para categoría y sí/no) */
+.cg-wizard-edit-badge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #7c3aed;
+  background: #f3e8ff;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+/* Opciones grandes */
 .cg-options {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -538,31 +599,6 @@
   box-shadow: 0 0 0 4px rgba(14,165,233,0.12);
 }
 
-.cg-option-radio {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid #cbd5e1;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all .15s ease;
-}
-
-.cg-option.selected .cg-option-radio {
-  border-color: #0ea5e9;
-}
-
-.cg-option.selected .cg-option-radio::after {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #0ea5e9;
-}
-
 .cg-option-check {
   width: 22px;
   height: 22px;
@@ -575,6 +611,7 @@
   font-size: 13px;
   font-weight: 700;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 .cg-option-icon {
@@ -592,6 +629,43 @@
 
 .cg-option.selected .cg-option-icon { border-color: #7dd3fc; }
 
+/* Step monto (precio + cantidad) */
+.cg-monto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  max-width: 520px;
+}
+
+.cg-subtotal-preview {
+  margin-top: 28px;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, #f0f9ff 0%, #eef2ff 100%);
+  border: 1.5px solid #bae6fd;
+  border-radius: 12px;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  animation: cgFadeIn .25s ease;
+}
+
+.cg-subtotal-preview span {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0369a1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cg-subtotal-preview strong {
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.4px;
+}
+
 /* Drop zone archivo */
 .cg-dropzone {
   border: 2px dashed #cbd5e1;
@@ -602,6 +676,7 @@
   cursor: pointer;
   transition: all .15s ease;
   max-width: 520px;
+  display: block;
 }
 
 .cg-dropzone:hover { border-color: #0ea5e9; background: #f0f9ff; }
@@ -623,6 +698,10 @@
   justify-content: center;
   font-size: 22px;
   margin: 0 auto 14px;
+}
+
+.cg-dropzone.has-file .cg-dropzone-icon {
+  background: linear-gradient(135deg, #10b981, #059669);
 }
 
 .cg-dropzone-text { font-size: 14px; font-weight: 600; color: #334155; }
@@ -681,6 +760,7 @@
 @media (max-width: 560px) {
   .cg-grid { grid-template-columns: 1fr; }
   .cg-options { grid-template-columns: 1fr 1fr; }
+  .cg-monto-grid { grid-template-columns: 1fr; }
   .cg-wizard-nav { flex-direction: column-reverse; }
   .cg-btn-back, .cg-btn-next { width: 100%; }
   .cg-btn-next { margin-left: 0; }
