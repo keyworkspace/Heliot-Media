@@ -1,6 +1,6 @@
 /* ============================================================
    Captación de Gastos · Heliot Media
-   Wizard paso a paso + Dashboard visual
+   Wizard paso a paso + Dashboard visual + Edición + Totales
    ============================================================ */
 
 (function () {
@@ -25,48 +25,92 @@
     { valor: 'Otros',        icono: '📌' }
   ];
 
-  const STEP_ORDER = ['fecha', 'categoria', 'proveedor', 'descripcion', 'poseeRecibo', 'archivo', 'comentarios'];
+  /* ---------------- Orden de pasos ---------------- */
+  const STEP_ORDER = [
+    'fecha',
+    'categoria',
+    'proveedor',
+    'descripcion',
+    'monto',
+    'poseeRecibo',
+    'archivo',
+    'comentarios'
+  ];
 
   /* ---------------- Estado ---------------- */
   const state = {
-    colaborador: null,           // { codigo, nombre, rol, iniciales }
-    gastos: [],                  // [{fecha, categoria, proveedor, descripcion, poseeRecibo, archivo, comentarios}]
-    wizard: null,                // gasto en construcción
-    wizardStep: null,            // key actual
-    editarIndex: null            // null = nuevo; número = editar
+    colaborador: null,
+    gastos: [],
+    wizard: null,
+    wizardStep: null,
+    editarIndex: null
   };
 
   /* ---------------- Referencias ---------------- */
-  const viewColab     = document.getElementById('cgViewColab');
-  const viewDash      = document.getElementById('cgViewDash');
-  const viewWizard    = document.getElementById('cgViewWizard');
+  const viewColab   = document.getElementById('cgViewColab');
+  const viewDash    = document.getElementById('cgViewDash');
+  const viewWizard  = document.getElementById('cgViewWizard');
 
-  const codigoInput   = document.getElementById('cgCodigo');
-  const collabInfo    = document.getElementById('cgCollabInfo');
-  const collabName    = document.getElementById('cgCollabName');
-  const collabRole    = document.getElementById('cgCollabRole');
-  const collabAv      = document.getElementById('cgCollabAvatar');
-  const colabCont     = document.getElementById('cgColabContinuar');
+  const codigoInput = document.getElementById('cgCodigo');
+  const collabInfo  = document.getElementById('cgCollabInfo');
+  const collabName  = document.getElementById('cgCollabName');
+  const collabRole  = document.getElementById('cgCollabRole');
+  const collabAv    = document.getElementById('cgCollabAvatar');
+  const colabCont   = document.getElementById('cgColabContinuar');
 
-  const dashAvatar    = document.getElementById('cgDashAvatar');
-  const dashName      = document.getElementById('cgDashName');
-  const dashRole      = document.getElementById('cgDashRole');
-  const dashCount     = document.getElementById('cgDashCount');
-  const grid          = document.getElementById('cgGrid');
-  const btnEnviar     = document.getElementById('cgEnviar');
-  const btnCambiar    = document.getElementById('cgCambiarColab');
+  const dashAvatar  = document.getElementById('cgDashAvatar');
+  const dashName    = document.getElementById('cgDashName');
+  const dashRole    = document.getElementById('cgDashRole');
+  const dashCount   = document.getElementById('cgDashCount');
+  const dashTotal   = document.getElementById('cgDashTotal');
+  const dashTotalV  = document.getElementById('cgDashTotalValue');
+  const grid        = document.getElementById('cgGrid');
+  const btnEnviar   = document.getElementById('cgEnviar');
+  const btnCambiar  = document.getElementById('cgCambiarColab');
 
-  const wizardBody    = document.getElementById('cgWizardBody');
-  const wizardNext    = document.getElementById('cgWizardNext');
-  const wizardBack    = document.getElementById('cgWizardBack');
-  const wizardCancel  = document.getElementById('cgWizardCancel');
-  const progressFill  = document.getElementById('cgProgressFill');
-  const progressText  = document.getElementById('cgProgressText');
+  const wizardBody  = document.getElementById('cgWizardBody');
+  const wizardNext  = document.getElementById('cgWizardNext');
+  const wizardBack  = document.getElementById('cgWizardBack');
+  const wizardCancel= document.getElementById('cgWizardCancel');
+  const progressFill= document.getElementById('cgProgressFill');
+  const progressText= document.getElementById('cgProgressText');
 
-  /* ---------------- Navegación entre vistas ---------------- */
+  /* ---------------- Utilidades ---------------- */
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  function formatFecha(iso) {
+    if (!iso) return '—';
+    const [y, m, d] = iso.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  function formatUSD(n) {
+    const num = Number(n) || 0;
+    return '$' + num.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function subtotalDe(g) {
+    const pu = parseFloat(g.precioUnitario) || 0;
+    const c  = parseFloat(g.cantidad) || 0;
+    return pu * c;
+  }
+
+  function totalGeneral() {
+    return state.gastos.reduce((acc, g) => acc + subtotalDe(g), 0);
+  }
+
+  /* ---------------- Vistas ---------------- */
   function mostrarVista(vista) {
-    viewColab.hidden = vista !== 'colab';
-    viewDash.hidden  = vista !== 'dash';
+    viewColab.hidden  = vista !== 'colab';
+    viewDash.hidden   = vista !== 'dash';
     viewWizard.hidden = vista !== 'wizard';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -99,6 +143,13 @@
   });
   codigoInput.addEventListener('blur', validarCodigo);
 
+  codigoInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!colabCont.disabled) colabCont.click();
+    }
+  });
+
   colabCont.addEventListener('click', () => {
     const val = codigoInput.value.trim().toUpperCase();
     const col = COLABORADORES[val];
@@ -127,8 +178,7 @@
     grid.innerHTML = '';
 
     state.gastos.forEach((g, i) => {
-      const card = crearTarjetaGasto(g, i);
-      grid.appendChild(card);
+      grid.appendChild(crearTarjetaGasto(g, i));
     });
 
     const addCard = document.createElement('button');
@@ -143,6 +193,14 @@
 
     const n = state.gastos.length;
     dashCount.textContent = n === 1 ? '1 gasto' : `${n} gastos`;
+
+    if (n > 0) {
+      dashTotal.hidden = false;
+      dashTotalV.textContent = formatUSD(totalGeneral());
+    } else {
+      dashTotal.hidden = true;
+    }
+
     btnEnviar.disabled = n === 0;
     btnEnviar.textContent = n === 0
       ? 'Añade al menos un gasto'
@@ -157,12 +215,20 @@
       ? '<span class="cg-card-tag tiene">✓ Con recibo</span>'
       : '<span class="cg-card-tag sin">Sin recibo</span>';
 
+    const pu = parseFloat(g.precioUnitario) || 0;
+    const c  = parseFloat(g.cantidad) || 0;
+    const subtotal = subtotalDe(g);
+
     card.innerHTML = `
       <div class="cg-card-top">
         <span class="cg-card-num">Gasto ${index + 1}</span>
-        <span class="cg-card-cat">${g.categoria}</span>
+        <span class="cg-card-cat">${escapeHtml(g.categoria)}</span>
       </div>
       <p class="cg-card-desc">${escapeHtml(g.descripcion)}</p>
+      <div class="cg-card-subtotal">
+        ${formatUSD(subtotal)}
+        <small>${formatUSD(pu)} × ${c}</small>
+      </div>
       <div class="cg-card-meta">
         <span><strong>Fecha:</strong> ${formatFecha(g.fecha)}</span>
         ${g.proveedor ? `<span><strong>Lugar:</strong> ${escapeHtml(g.proveedor)}</span>` : ''}
@@ -170,10 +236,14 @@
       </div>
       <div class="cg-card-footer">
         ${tiene}
-        <button type="button" class="cg-card-del" title="Eliminar">×</button>
+        <div class="cg-card-actions">
+          <button type="button" class="cg-card-edit" title="Editar">✎</button>
+          <button type="button" class="cg-card-del" title="Eliminar">×</button>
+        </div>
       </div>
     `;
 
+    card.querySelector('.cg-card-edit').addEventListener('click', () => abrirWizardEditar(index));
     card.querySelector('.cg-card-del').addEventListener('click', () => {
       if (!confirm('¿Eliminar este gasto?')) return;
       state.gastos.splice(index, 1);
@@ -186,18 +256,43 @@
   /* ============================================================
      VISTA 3 · WIZARD
      ============================================================ */
-  function abrirWizardNuevo() {
-    state.wizard = {
+  function gastoVacio() {
+    return {
       fecha: '',
       categoria: '',
       proveedor: '',
       descripcion: '',
+      precioUnitario: '',
+      cantidad: '',
       poseeRecibo: null,
       archivo: null,
       comentarios: ''
     };
+  }
+
+  function abrirWizardNuevo() {
+    state.wizard = gastoVacio();
     state.wizardStep = 'fecha';
     state.editarIndex = null;
+    mostrarVista('wizard');
+    renderWizard();
+  }
+
+  function abrirWizardEditar(index) {
+    const g = state.gastos[index];
+    state.wizard = {
+      fecha: g.fecha,
+      categoria: g.categoria,
+      proveedor: g.proveedor,
+      descripcion: g.descripcion,
+      precioUnitario: g.precioUnitario,
+      cantidad: g.cantidad,
+      poseeRecibo: g.poseeRecibo,
+      archivo: g.archivo,
+      comentarios: g.comentarios
+    };
+    state.editarIndex = index;
+    state.wizardStep = 'fecha';
     mostrarVista('wizard');
     renderWizard();
   }
@@ -223,19 +318,24 @@
 
   function renderStep(step) {
     const w = state.wizard;
+    const editBadge = state.editarIndex !== null
+      ? `<div class="cg-wizard-edit-badge">Editando gasto ${state.editarIndex + 1}</div>`
+      : '';
 
     switch (step) {
       case 'fecha':
         return `
+          ${editBadge}
           <h2 class="cg-wizard-title">¿Cuándo fue el gasto?</h2>
           <p class="cg-wizard-sub">Selecciona la fecha en que realizaste el gasto.</p>
           <div class="cg-wizard-input-wrap">
-            <input type="date" class="cg-input cg-input-lg" id="cgWizInput" value="${w.fecha || ''}">
+            <input type="date" class="cg-input cg-input-lg" id="cgWizInput" value="${escapeAttr(w.fecha)}">
           </div>
         `;
 
       case 'categoria':
         return `
+          ${editBadge}
           <h2 class="cg-wizard-title">¿Qué tipo de gasto fue?</h2>
           <p class="cg-wizard-sub">Elige la categoría que mejor lo describa.</p>
           <div class="cg-options">
@@ -251,6 +351,7 @@
 
       case 'proveedor':
         return `
+          ${editBadge}
           <h2 class="cg-wizard-title">¿Dónde lo compraste?</h2>
           <p class="cg-wizard-sub">Nombre del proveedor, tienda o lugar. Puedes dejarlo vacío si no aplica.</p>
           <div class="cg-wizard-input-wrap">
@@ -261,6 +362,7 @@
 
       case 'descripcion':
         return `
+          ${editBadge}
           <h2 class="cg-wizard-title">¿Cuál fue el motivo?</h2>
           <p class="cg-wizard-sub">Describe brevemente en qué consistió el gasto.</p>
           <div class="cg-wizard-input-wrap">
@@ -269,24 +371,59 @@
           </div>
         `;
 
+      case 'monto': {
+        const pu = parseFloat(w.precioUnitario) || 0;
+        const c  = parseFloat(w.cantidad) || 0;
+        const sub = pu * c;
+        return `
+          ${editBadge}
+          <h2 class="cg-wizard-title">Detalle del monto</h2>
+          <p class="cg-wizard-sub">Indica el precio unitario y cuántas unidades compraste. El sistema calcula el subtotal automáticamente.</p>
+
+          <div class="cg-monto-grid">
+            <div class="cg-field">
+              <label class="cg-label">Precio unitario (USD) <span class="cg-req">*</span></label>
+              <input type="number" class="cg-input cg-input-lg" id="cgWizPrecio"
+                     inputmode="decimal" step="0.01" min="0" placeholder="0.00"
+                     value="${escapeAttr(w.precioUnitario)}">
+            </div>
+            <div class="cg-field">
+              <label class="cg-label">Cantidad comprada <span class="cg-req">*</span></label>
+              <input type="number" class="cg-input cg-input-lg" id="cgWizCantidad"
+                     inputmode="numeric" step="1" min="1" placeholder="1"
+                     value="${escapeAttr(w.cantidad)}">
+            </div>
+          </div>
+
+          <div class="cg-subtotal-preview">
+            <span>Subtotal del gasto</span>
+            <strong id="cgWizSubtotal">${formatUSD(sub)}</strong>
+          </div>
+        `;
+      }
+
       case 'poseeRecibo':
         return `
+          ${editBadge}
           <h2 class="cg-wizard-title">¿Tienes recibo o factura?</h2>
           <p class="cg-wizard-sub">Si lo tienes, podrás adjuntarlo en el siguiente paso.</p>
           <div class="cg-options">
             <button type="button" class="cg-option ${w.poseeRecibo === true ? 'selected' : ''}" data-value="si">
               <span class="cg-option-icon">🧾</span>
               <span>Sí, tengo recibo</span>
+              ${w.poseeRecibo === true ? '<span class="cg-option-check">✓</span>' : ''}
             </button>
             <button type="button" class="cg-option ${w.poseeRecibo === false ? 'selected' : ''}" data-value="no">
               <span class="cg-option-icon">🚫</span>
               <span>No tengo recibo</span>
+              ${w.poseeRecibo === false ? '<span class="cg-option-check">✓</span>' : ''}
             </button>
           </div>
         `;
 
       case 'archivo':
         return `
+          ${editBadge}
           <h2 class="cg-wizard-title">Adjunta el recibo</h2>
           <p class="cg-wizard-sub">Formatos aceptados: JPG, PNG o PDF. Máx. 10 MB.</p>
           <label class="cg-dropzone ${w.archivo ? 'has-file' : ''}" for="cgWizFile">
@@ -302,6 +439,7 @@
 
       case 'comentarios':
         return `
+          ${editBadge}
           <h2 class="cg-wizard-title">¿Algo más que agregar?</h2>
           <p class="cg-wizard-sub">Comentarios adicionales para administración. Opcional.</p>
           <div class="cg-wizard-input-wrap">
@@ -337,12 +475,29 @@
       input.focus();
       input.addEventListener('input', () => { w.comentarios = input.value; });
 
+    } else if (step === 'monto') {
+      const inpPrecio   = document.getElementById('cgWizPrecio');
+      const inpCantidad = document.getElementById('cgWizCantidad');
+      const lblSub      = document.getElementById('cgWizSubtotal');
+
+      const actualizar = () => {
+        const pu = parseFloat(inpPrecio.value) || 0;
+        const c  = parseFloat(inpCantidad.value) || 0;
+        lblSub.textContent = formatUSD(pu * c);
+      };
+
+      inpPrecio.addEventListener('input', () => { w.precioUnitario = inpPrecio.value; actualizar(); });
+      inpCantidad.addEventListener('input', () => { w.cantidad = inpCantidad.value; actualizar(); });
+
+      inpPrecio.focus();
+
     } else if (step === 'categoria') {
       wizardBody.querySelectorAll('.cg-option').forEach(btn => {
         btn.addEventListener('click', () => {
           w.categoria = btn.dataset.value;
           renderWizard();
-          setTimeout(() => wizardNext.focus(), 50);
+          // Auto-avance cómodo tras seleccionar
+          setTimeout(() => wizardNext.click(), 220);
         });
       });
 
@@ -350,12 +505,9 @@
       wizardBody.querySelectorAll('.cg-option').forEach(btn => {
         btn.addEventListener('click', () => {
           const val = btn.dataset.value === 'si';
-          if (w.poseeRecibo !== val) {
-            w.poseeRecibo = val;
-            if (!val) w.archivo = null;
-          }
+          w.poseeRecibo = val;
           renderWizard();
-          setTimeout(() => wizardNext.focus(), 50);
+          setTimeout(() => wizardNext.click(), 220);
         });
       });
 
@@ -386,6 +538,13 @@
       case 'descripcion':
         if (!w.descripcion.trim()) return 'Escribe el motivo del gasto.';
         return null;
+      case 'monto': {
+        const pu = parseFloat(w.precioUnitario);
+        const c  = parseFloat(w.cantidad);
+        if (!pu || pu <= 0) return 'Ingresa un precio unitario mayor a 0.';
+        if (!c || c < 1)    return 'Ingresa una cantidad mayor o igual a 1.';
+        return null;
+      }
       case 'poseeRecibo':
         if (w.poseeRecibo === null) return 'Indica si tienes recibo o no.';
         return null;
@@ -398,7 +557,6 @@
   }
 
   function mostrarAlerta(msg) {
-    // pequeño aviso visual temporal
     const existing = document.querySelector('.cg-toast');
     if (existing) existing.remove();
 
@@ -410,7 +568,7 @@
       background: #ef4444; color: #fff; font-family: inherit; font-size: 13.5px;
       font-weight: 600; padding: 12px 20px; border-radius: 10px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25); z-index: 9999;
-      animation: cgFadeIn .2s ease;
+      max-width: 90vw; text-align: center;
     `;
     document.body.appendChild(toast);
     setTimeout(() => toast.remove(), 2600);
@@ -425,7 +583,6 @@
     const idx = steps.indexOf(state.wizardStep);
 
     if (idx === steps.length - 1) {
-      // Terminar → guardar
       guardarGastoYVolver();
     } else {
       state.wizardStep = steps[idx + 1];
@@ -443,15 +600,40 @@
   });
 
   wizardCancel.addEventListener('click', () => {
-    if (confirm('¿Cancelar este gasto? Se perderá lo que llevas.')) {
+    const msg = state.editarIndex !== null
+      ? '¿Cancelar la edición? Se perderán los cambios.'
+      : '¿Cancelar este gasto? Se perderá lo que llevas.';
+    if (confirm(msg)) {
       state.wizard = null;
+      state.editarIndex = null;
       mostrarVista('dash');
     }
   });
 
+  /* ---------- Enter avanza de paso en el wizard ---------- */
+  wizardBody.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    const tag = (e.target.tagName || '').toUpperCase();
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
+      e.preventDefault();
+      wizardNext.click();
+    }
+  });
+
   function guardarGastoYVolver() {
-    state.gastos.push({ ...state.wizard });
+    const g = { ...state.wizard };
+
+    // Si no tiene recibo, limpiamos el archivo
+    if (!g.poseeRecibo) g.archivo = null;
+
+    if (state.editarIndex !== null) {
+      state.gastos[state.editarIndex] = g;
+    } else {
+      state.gastos.push(g);
+    }
+
     state.wizard = null;
+    state.editarIndex = null;
     renderDashboard();
     mostrarVista('dash');
   }
@@ -467,25 +649,31 @@
     const form = document.getElementById('cgFinalForm');
     form.innerHTML = '';
 
-    // Campos fijos
     addHidden(form, '_subject', 'Nuevo gasto registrado · Captación de Gastos');
     addHidden(form, '_template', 'table');
     addHidden(form, '_captcha', 'false');
     addHidden(form, 'Moneda', 'USD');
     addHidden(form, 'Código de colaborador', state.colaborador.codigo);
     addHidden(form, 'Colaborador', state.colaborador.nombre + ' — ' + state.colaborador.rol);
+    addHidden(form, 'Gastos generales (USD)', formatUSD(totalGeneral()));
 
-    // Gastos
     state.gastos.forEach((g, i) => {
       const n = i + 1;
+      const pu = parseFloat(g.precioUnitario) || 0;
+      const c  = parseFloat(g.cantidad) || 0;
+      const sub = pu * c;
+
       addHidden(form, `Gasto ${n} - Fecha`, g.fecha);
       addHidden(form, `Gasto ${n} - Categoría`, g.categoria);
       addHidden(form, `Gasto ${n} - Proveedor`, g.proveedor || '—');
       addHidden(form, `Gasto ${n} - Descripción`, g.descripcion);
+      addHidden(form, `Gasto ${n} - Precio unitario (USD)`, pu.toFixed(2));
+      addHidden(form, `Gasto ${n} - Cantidad`, c);
+      addHidden(form, `Gasto ${n} - Subtotal (USD)`, sub.toFixed(2));
       addHidden(form, `Gasto ${n} - Posee recibo`, g.poseeRecibo ? 'Sí' : 'No');
       addHidden(form, `Gasto ${n} - Comentarios`, g.comentarios || '—');
 
-      if (g.archivo) {
+      if (g.poseeRecibo && g.archivo) {
         const dt = new DataTransfer();
         dt.items.add(g.archivo);
         const fileInput = document.createElement('input');
@@ -506,20 +694,6 @@
     input.name = name;
     input.value = value;
     form.appendChild(input);
-  }
-
-  /* ---------------- Helpers ---------------- */
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[c]));
-  }
-  function escapeAttr(s) { return escapeHtml(s || ''); }
-
-  function formatFecha(iso) {
-    if (!iso) return '—';
-    const [y, m, d] = iso.split('-');
-    return `${d}/${m}/${y}`;
   }
 
 })();
